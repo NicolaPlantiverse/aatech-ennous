@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ennous · Meta-Intelligence — AATECH Board Edition</title>
+<style>
+/* ============================================================
+   Ennous — AATECH · Edge Governance & AI · Demo board
+   Design system: dark, glass, una sola voce tipografica.
+   ============================================================ */
+:root{
+  --bg:#07090c;
+  --bg2:#0b0e13;
+  --panel:rgba(255,255,255,.035);
+  --panel2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.16);
+  --txt:#eceef1;
+  --txt2:#9aa3ad;
+  --txt3:#5c6670;
+  --gold:#d4a843;
+  --green:#3fae6a;
+  --cyan:#4cc3d9;
+  --violet:#9b7fd4;
+  --red:#d46a5a;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:rgba(212,168,67,.25)}
+
+/* ---- grain + glow di fondo ---- */
+.bgfx{position:fixed;inset:0;pointer-events:none;z-index:0}
+.bgfx::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(900px 600px at 80% -10%, rgba(212,168,67,.06), transparent 60%),
+    radial-gradient(800px 700px at -10% 40%, rgba(63,174,106,.05), transparent 60%),
+    radial-gradient(700px 600px at 60% 110%, rgba(76,195,217,.04), transparent 60%);
+}
+
+/* ---- nav ---- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;gap:28px;
+  padding:14px 32px;
+  background:rgba(7,9,12,.72);
+  backdrop-filter:blur(22px) saturate(1.4);
+  -webkit-backdrop-filter:blur(22px) saturate(1.4);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--txt)}
+.brand b{font-size:17px;letter-spacing:.04em}
+.brand span{font-size:11px;color:var(--txt2);letter-spacing:.08em}
+nav .links{display:flex;gap:4px;margin-left:auto}
+nav .links a{
+  color:var(--txt2);text-decoration:none;font-size:12.5px;letter-spacing:.02em;
+  padding:7px 12px;border-radius:9px;transition:.25s;
+}
+nav .links a:hover{color:var(--txt);background:var(--panel2)}
+.demo-badge{
+  font-size:10px;letter-spacing:.14em;color:var(--gold);
+  border:1px solid rgba(212,168,67,.35);border-radius:999px;
+  padding:5px 12px;white-space:nowrap;
+}
+
+/* ---- layout scene ---- */
+section{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:110px 32px}
+.kicker{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:18px;font-weight:600;
+}
+h1{font-size:clamp(44px,7vw,84px);font-weight:700;letter-spacing:-.03em;line-height:1.02}
+h2{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-.025em;line-height:1.08;margin-bottom:14px}
+h3{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.lead{font-size:18px;line-height:1.65;color:var(--txt2);max-width:680px;font-weight:400}
+.lead strong{color:var(--txt);font-weight:600}
+
+/* ---- reveal on scroll ---- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}
+
+/* ---- hero ---- */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:140px}
+#hero .sub{margin-top:26px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:64px}
+.hstat{background:var(--bg2);padding:26px 24px}
+.hstat .n{font-size:34px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.hstat .l{font-size:12px;color:var(--txt2);margin-top:6px;line-height:1.45}
+.scroll-hint{margin-top:70px;font-size:12px;color:var(--txt3);letter-spacing:.12em;text-transform:uppercase}
+.scroll-hint::after{content:"↓";display:inline-block;margin-left:8px;animation:bob 2.2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ---- pannelli generici ---- */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.note{font-size:11.5px;color:var(--txt3);line-height:1.6;margin-top:18px}
+.note b{color:var(--txt2);font-weight:600}
+
+/* ---- mappa ---- */
+.map-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;margin-top:46px;align-items:stretch}
+.map-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative}
+#italy{width:100%;height:auto;display:block}
+.map-legend{display:flex;flex-wrap:wrap;gap:14px;padding:10px 8px 2px}
+.lg{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--txt2)}
+.lg i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.asset-node{cursor:pointer}
+.asset-node circle.core{transition:r .25s}
+.asset-node:hover circle.core{r:7}
+.asset-node.sel circle.core{stroke:#fff;stroke-width:1.4}
+.pulse{animation:pulse 2.6s infinite}
+@keyframes pulse{0%{opacity:.7;transform:scale(1)}70%{opacity:0;transform:scale(2.6)}100%{opacity:0;transform:scale(2.6)}}
+
+.asset-detail{display:flex;flex-direction:column;gap:14px}
+.asset-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;flex:1;display:flex;flex-direction:column}
+.asset-card .cls{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.asset-card h3{font-size:21px;margin:8px 0 4px}
+.asset-card .meta{font-size:12.5px;color:var(--txt2);line-height:1.6}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;border:1px solid var(--line2);border-radius:999px;padding:4px 12px;margin-top:12px;color:var(--txt2)}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.spark{margin-top:18px}
+.spark canvas{width:100%;height:88px;display:block}
+.spark .sl{display:flex;justify-content:space-between;font-size:11px;color:var(--txt3);margin-top:6px}
+.signals{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.signals .sg{display:flex;gap:10px;font-size:12.5px;color:var(--txt2);line-height:1.5}
+.signals .sg::before{content:"—";color:var(--gold)}
+.asset-list{display:flex;flex-wrap:wrap;gap:8px}
+.achip{
+  font-size:11.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  color:var(--txt2);cursor:pointer;transition:.2s;background:transparent;font-family:inherit;
+}
+.achip:hover{border-color:var(--line2);color:var(--txt)}
+.achip.sel{border-color:var(--gold);color:var(--gold)}
+
+/* ---- scenari ---- */
+.scn-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.scn-tab{
+  text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:20px;cursor:pointer;transition:.3s;font-family:inherit;color:var(--txt);
+}
+.scn-tab .ic{font-size:20px}
+.scn-tab h4{font-size:14.5px;font-weight:600;margin:10px 0 5px;letter-spacing:-.01em}
+.scn-tab p{font-size:11.5px;color:var(--txt2);line-height:1.5}
+.scn-tab:hover{border-color:var(--line2);transform:translateY(-2px)}
+.scn-tab.sel{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,168,67,.07),rgba(212,168,67,.02))}
+
+.scn-stage{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}
+.gate-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.gate-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.gate-head .t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);font-weight:600}
+.gate-count{font-size:13px;color:var(--txt2)}
+.gate-count b{color:var(--gold);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+#engineGrid{display:grid;grid-template-columns:repeat(20,1fr);gap:6px;margin:18px 0 6px}
+.eng{
+  aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.07);
+  transition:background .5s,box-shadow .5s,transform .5s;position:relative;
+}
+.eng.on{background:var(--gold);box-shadow:0 0 10px rgba(212,168,67,.55);transform:scale(1.25)}
+.eng.on.g{background:var(--green);box-shadow:0 0 10px rgba(63,174,106,.55)}
+.eng.on.c{background:var(--cyan);box-shadow:0 0 10px rgba(76,195,217,.55)}
+.eng.on.v{background:var(--violet);box-shadow:0 0 10px rgba(155,127,212,.55)}
+.gate-formula{
+  margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;
+  font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--txt2);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.gate-formula .f{color:var(--txt)}
+.gate-formula .pat{font-size:10px;letter-spacing:.1em;color:var(--txt3)}
+.wbars{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.wb .wl{display:flex;justify-content:space-between;font-size:11px;color:var(--txt2);margin-bottom:6px}
+.wb .wl b{color:var(--txt);font-variant-numeric:tabular-nums}
+.wb .tr{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.wb .fl{height:100%;background:var(--gold);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.gate-metrics{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:16px}
+.gm{flex:1;background:var(--bg2);padding:13px 14px;text-align:center}
+.gm .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.gm .k{font-size:10px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+
+.pipe{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column}
+.pipe .t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);font-weight:600;margin-bottom:16px}
+.pl{display:flex;gap:14px;padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.06);align-items:flex-start}
+.pl:last-of-type{border-bottom:none}
+.pl .lv{
+  font-size:10.5px;font-weight:700;color:var(--gold);border:1px solid rgba(212,168,67,.4);
+  border-radius:7px;padding:3px 7px;min-width:34px;text-align:center;margin-top:1px;font-variant-numeric:tabular-nums;
+}
+.pl .px{flex:1}
+.pl .px b{font-size:13px;font-weight:600;display:block}
+.pl .px span{font-size:11.5px;color:var(--txt2);line-height:1.5;display:block;margin-top:2px}
+.pl .tm{font-size:11px;color:var(--txt3);font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:3px}
+
+.outs{margin-top:22px}
+.outs .t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);font-weight:600;margin-bottom:14px}
+.out-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.out{
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;
+  display:flex;flex-direction:column;gap:10px;transition:.25s;
+}
+.out:hover{border-color:var(--line2)}
+.out .oh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.out h4{font-size:14px;font-weight:600;line-height:1.4;letter-spacing:-.01em}
+.conf{font-size:11px;color:var(--txt2);white-space:nowrap}
+.conf b{color:var(--green);font-size:15px}
+.out p{font-size:12px;color:var(--txt2);line-height:1.6;flex:1}
+.out .lead-t{font-size:11px;color:var(--txt3)}
+.audit-btn{
+  align-self:flex-start;background:transparent;border:1px solid var(--line2);color:var(--txt);
+  font-size:11.5px;padding:7px 13px;border-radius:999px;cursor:pointer;transition:.2s;font-family:inherit;
+}
+.audit-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ---- audit modal ---- */
+#auditModal{
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  background:rgba(4,5,7,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+#auditModal.open{display:flex}
+.audit-box{
+  width:min(680px,92vw);max-height:84vh;overflow-y:auto;background:#0c0f14;
+  border:1px solid var(--line2);border-radius:22px;padding:34px;
+}
+.audit-box .ah{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.audit-box h3{font-size:19px;letter-spacing:-.01em}
+.audit-box .sub{font-size:12px;color:var(--txt2);margin-bottom:24px;line-height:1.6}
+.aclose{background:none;border:none;color:var(--txt2);font-size:22px;cursor:pointer;line-height:1}
+.aclose:hover{color:var(--txt)}
+.chain{position:relative;padding-left:26px}
+.chain::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--gold),rgba(212,168,67,.1))}
+.cstep{position:relative;padding-bottom:22px}
+.cstep::before{content:"";position:absolute;left:-22px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.cstep .cl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.cstep h5{font-size:13.5px;font-weight:600;margin:4px 0 8px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 16px;font-size:11.5px}
+.kv .k{color:var(--txt3)}
+.kv .v{color:var(--txt2);font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:10.5px;word-break:break-all}
+.audit-note{margin-top:8px;padding:12px 14px;border:1px solid rgba(212,168,67,.3);border-radius:10px;font-size:11px;color:var(--txt2);line-height:1.6}
+
+/* ---- tracciabilità ---- */
+.tr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.tr-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.tr-card .ic{font-size:22px;margin-bottom:14px;display:block}
+.tr-card h3{margin-bottom:8px}
+.tr-card p{font-size:13px;color:var(--txt2);line-height:1.65}
+
+/* ---- governance ---- */
+.gov{display:grid;grid-template-columns:1fr 60px 1fr;align-items:stretch;margin-top:46px}
+.gov-col{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.gov-col h3{margin-bottom:6px}
+.gov-col .sub{font-size:12px;color:var(--txt2);margin-bottom:18px;line-height:1.6}
+.gov-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.gov-col li{font-size:12.5px;color:var(--txt2);line-height:1.55;padding-left:16px;position:relative}
+.gov-col li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.gov-sep{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.gov-sep .bar{flex:1;width:1px;background:repeating-linear-gradient(to bottom,var(--gold) 0 6px,transparent 6px 13px);opacity:.6}
+.gov-sep .lbl{writing-mode:vertical-rl;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:11.5px;color:var(--txt2);margin-top:5px;line-height:1.5}
+.tag{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;border-radius:5px;padding:3px 7px;margin-top:10px;font-weight:700}
+.tag.mis{color:var(--green);border:1px solid rgba(63,174,106,.4)}
+.tag.sim{color:var(--gold);border:1px solid rgba(212,168,67,.4)}
+.tag.pub{color:var(--cyan);border:1px solid rgba(76,195,217,.4)}
+
+/* ---- architettura ---- */
+.arch{margin-top:46px;display:grid;grid-template-columns:1fr;gap:10px;position:relative}
+.arch-l{
+  display:grid;grid-template-columns:70px 1fr 1fr;gap:22px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 24px;
+}
+.arch-l.core{border-color:rgba(212,168,67,.45);background:linear-gradient(90deg,rgba(212,168,67,.07),rgba(212,168,67,.015))}
+.arch-l .lv{font-size:15px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+.arch-l .fx b{font-size:13.5px;font-weight:600;display:block}
+.arch-l .fx span{font-size:11.5px;color:var(--txt2);line-height:1.5;display:block;margin-top:2px}
+.arch-l .rel{font-size:11.5px;color:var(--txt2);line-height:1.55;border-left:1px solid var(--line);padding-left:20px}
+.arch-meta{display:grid;grid-template-columns:70px 1fr;gap:22px;background:transparent;border:1px dashed rgba(155,127,212,.4);border-radius:14px;padding:16px 24px;align-items:center}
+.arch-meta .lv{color:var(--violet);font-size:13px;font-weight:700}
+.arch-meta .fx{font-size:12px;color:var(--txt2);line-height:1.55}
+.ip-note{margin-top:24px;display:flex;gap:14px;flex-wrap:wrap}
+.ip-chip{font-size:11px;color:var(--txt2);border:1px solid var(--line);border-radius:999px;padding:7px 15px}
+.ip-chip b{color:var(--txt)}
+
+/* ---- percorso ---- */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.ws{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative}
+.ws .wn{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.18em}
+.ws h3{margin:10px 0 8px}
+.ws p{font-size:12.5px;color:var(--txt2);line-height:1.65}
+.endcap{
+  margin-top:18px;background:linear-gradient(135deg,rgba(212,168,67,.1),rgba(63,174,106,.06));
+  border:1px solid rgba(212,168,67,.35);border-radius:var(--radius);padding:30px 34px;
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.endcap h3{font-size:20px;letter-spacing:-.01em}
+.endcap p{font-size:13px;color:var(--txt2);line-height:1.6;max-width:640px;margin-top:6px}
+
+/* ---- footer ---- */
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:60px;padding:40px 32px 56px}
+footer .fin{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+footer p{font-size:11.5px;color:var(--txt3);line-height:1.7;max-width:720px}
+footer .sig{font-size:11.5px;color:var(--txt2);text-align:right;line-height:1.7}
+
+@media (max-width:980px){
+  .hero-stats,.out-grid,.tr-grid,.path,.kpi-row{grid-template-columns:1fr 1fr}
+  .map-wrap,.scn-stage,.grid2{grid-template-columns:1fr}
+  .scn-tabs{grid-template-columns:1fr 1fr}
+  .gov{grid-template-columns:1fr}
+  .gov-sep{display:none}
+}
+/* ---- meta-rete ---- */
+.metanet{margin-top:22px;padding:24px 24px 14px}
+#mnCanvas{width:100%;height:400px;display:block;border-radius:12px}
+.mn-cap{font-size:11.5px;color:var(--txt3);line-height:1.6;margin-top:12px;max-width:760px}
+.mn-cap b{color:var(--txt2)}
+.mn-tip{
+  position:absolute;pointer-events:none;background:rgba(10,13,18,.95);border:1px solid var(--line2);
+  border-radius:9px;padding:8px 12px;font-size:11.5px;color:var(--txt);display:none;z-index:5;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+.mn-tip span{display:block;color:var(--txt3);font-size:10px;margin-top:2px}
+
+/* ---- team & validazione ---- */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
+.tm{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.tm .role{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.tm h4{font-size:15px;font-weight:600;margin:8px 0 4px;letter-spacing:-.01em}
+.tm p{font-size:12px;color:var(--txt2);line-height:1.6}
+.val-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.pr{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.pr.hero-pr{border-color:rgba(76,195,217,.4);background:linear-gradient(180deg,rgba(76,195,217,.06),rgba(76,195,217,.015))}
+.pr .pn{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.pr .pt{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+.pr p{font-size:12px;color:var(--txt2);line-height:1.6}
+
+/* ---- finanza (demo B) ---- */
+.fin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:44px}
+.fin{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.fin .fh{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.fin h4{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.fin .fv{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fin .fv small{font-size:12px;color:var(--txt2);font-weight:400}
+.fin p{font-size:12px;color:var(--txt2);line-height:1.6;margin-top:8px}
+.fin canvas{width:100%;height:70px;display:block;margin-top:12px}
+.fin .src{font-size:10px;color:var(--txt3);margin-top:10px;letter-spacing:.04em}
+
+@media (max-width:980px){
+  .team-grid,.partner-grid,.fin-grid{grid-template-columns:1fr}
+  .val-row{grid-template-columns:1fr 1fr}
+  #mnCanvas{height:340px}
+}
+
+/* ---- nav mobile: compatta, mai nascosta ---- */
+@media (max-width:980px){
+  nav{flex-wrap:wrap;row-gap:8px;padding:12px 16px}
+  .brand span{display:none}
+  .demo-badge{font-size:9px;padding:4px 9px;margin-left:auto}
+  nav .links{display:flex;order:3;width:100%;margin-left:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav .links::-webkit-scrollbar{display:none}
+  nav .links a{white-space:nowrap;padding:6px 10px;font-size:12px}
+}
+.disc-btn{margin-top:14px;width:100%;display:flex;align-items:center;gap:9px;justify-content:center;background:linear-gradient(90deg,rgba(76,195,217,.12),rgba(63,174,106,.12));border:1px solid rgba(76,195,217,.35);color:var(--txt);border-radius:11px;padding:12px 16px;font:inherit;font-size:12.5px;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:.18s}.disc-btn:hover{border-color:var(--cyan);background:linear-gradient(90deg,rgba(76,195,217,.2),rgba(63,174,106,.18))}.disc-btn .di{font-size:15px}.disc-wrap{max-height:0;overflow:hidden;transition:max-height .5s ease}.disc-wrap.open{max-height:1600px;margin-top:14px}.disc-block{border:1px solid rgba(76,195,217,.3);border-radius:12px;padding:16px 16px 6px;background:rgba(76,195,217,.04)}.disc-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}.disc-head h4{margin:6px 0 0;font-size:14px;color:var(--txt);flex:1 1 100%;order:3}.disc-badge{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cyan);border:1px solid rgba(76,195,217,.4);border-radius:999px;padding:4px 9px}.disc-badge.alt{color:var(--green);border-color:rgba(63,174,106,.4)}.disc-intro{font-size:11px;color:var(--txt2);margin:0 0 12px;line-height:1.55}.disc-leap{display:flex;flex-direction:column;gap:11px}.dl{display:grid;grid-template-columns:128px 1fr;gap:12px;align-items:start}.dl-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--gold);padding-top:2px}.dl p{margin:0;font-size:11.5px;color:var(--txt2);line-height:1.55}.dl code{color:var(--cyan);font-size:10.5px;word-break:break-all}.disc-foot{margin-top:13px;padding-top:11px;border-top:1px solid var(--line);font-size:10px;color:var(--txt2);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}@media(max-width:560px){.dl{grid-template-columns:1fr;gap:3px}}.hero-net{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55;pointer-events:none}#hero{position:relative;overflow:hidden}#hero .hero-inner{position:relative;z-index:1;width:100%}#hero .hero-brand{font-size:clamp(28px,3.4vw,42px);font-weight:800;letter-spacing:.09em;color:var(--txt);margin-bottom:14px;line-height:1}@media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bgfx"></div>
+
+<nav>
+  <a class="brand" href="#hero"><b>ENNOUS</b><span>· Meta-Intelligence · for AATECH</span></a>
+  <div class="links">
+    <a href="#portafoglio">Portafoglio</a>
+    <a href="#scenari">Scenari</a>
+    <a href="#finanza">Finanza</a>
+    <a href="#tracciabilita">Tracciabilità</a>
+    <a href="#governance">Governance</a>
+    <a href="#architettura">Architettura</a>
+    <a href="#percorso">Percorso</a>
+    <a href="#team">Chi c'è dietro</a>
+  </div>
+  <span class="demo-badge">DEMO · DATI SIMULATI</span>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="heroNet" class="hero-net"></canvas>
+  <div class="hero-inner">
+  <div class="hero-brand rv">ENNOUS</div>
+  <div class="kicker rv d1">Meta-Intelligence · preparata per il board di AATECH</div>
+  <h1 class="rv d1">Un'infrastruttura AI.<br>Uno scudo che la governa.</h1>
+  <p class="lead sub rv d2">
+    AI Infrastructure sovrana, Credit Solutions, Garanzie pubbliche, Platform-as-a-Service: ogni workload e ogni decisione parla una lingua diversa.
+    Ennous le traduce in <strong>una grammatica comune</strong>, attiva solo l'analisi che serve,
+    e rende <strong>ogni decisione ripercorribile</strong>, dall'output fino al dato che l'ha generata, sotto AI Act, DORA e NIS 2.
+  </p>
+  <div class="hero-stats rv d3">
+    <div class="hstat"><div class="n" data-count="12">0</div><div class="l">workload e portafogli connessi in demo, su 5 linee di business</div></div>
+    <div class="hstat"><div class="n" data-count="100" data-prefix="≈">0</div><div class="l">modelli analitici attualmente gestibili (ordine di ~100), fisici, statistici, ibridi</div></div>
+    <div class="hstat"><div class="n" data-count="6" data-prefix="~" data-suffix="%">0</div><div class="l">quota tipica attiva per ciclo, variabile per scenario e input: il resto resta spento</div></div>
+    <div class="hstat"><div class="n" data-count="100" data-suffix="%">0</div><div class="l">degli output con catena di prova verificabile</div></div>
+  </div>
+  <div class="scroll-hint rv d3">Esplora la demo</div>
+</div>
+</section>
+
+<!-- ============ PORTAFOGLIO ============ -->
+<section id="portafoglio">
+  <div class="kicker rv">01 · Il portafoglio come sistema</div>
+  <h2 class="rv d1">Linee diverse, segnali confrontabili.</h2>
+  <p class="lead rv d2">
+    Ogni punto è un asset fisico. Oggi ciascuno vive nel proprio silos verticale — SCADA, MRV,
+    gestionali, modelli di rischio. Qui convergono in un'unica vista operativa, con telemetria
+    normalizzata e provenienza esplicita.
+  </p>
+
+  <div class="map-wrap rv d2">
+    <div class="map-panel">
+      <svg id="italy" viewBox="-20 -20 566 670" aria-label="Mappa degli asset"></svg>
+      <div class="map-legend">
+        <span class="lg"><i style="background:var(--gold)"></i>AI Infrastructure</span>
+        <span class="lg"><i style="background:var(--cyan)"></i>Credito</span>
+        <span class="lg"><i style="background:var(--green)"></i>Garanzie pubbliche</span>
+        <span class="lg"><i style="background:var(--violet)"></i>Platform · TaaS</span>
+        <span class="lg"><i style="background:#7fd49b"></i>Modelli SLM · AML/ESG</span>
+      </div>
+    </div>
+    <div class="asset-detail">
+      <div class="asset-list" id="assetChips"></div>
+      <div class="asset-card" id="assetCard"></div>
+    </div>
+  </div>
+  <p class="note">
+    <b>Nota sui dati.</b> Linee di business e ordini di grandezza derivano da informazioni pubbliche di AATech S.p.A. Società Benefit (fondata 2019, quotata su Euronext Growth Milan dal 2023, sede operativa a Fondi; clienti Allianz, Fineco, Azimut, Amundi, Gruppo BCC). Quattro linee — Credit Solutions, Garanzie pubbliche, Platform-as-a-Service e AI Infrastructure sovrana — con modelli SLM ready-to-use per AML, ESG e advisory e compliance EU AI Act / GDPR / DORA / NIS 2. La telemetria è <b>simulata</b> a scopo dimostrativo: la piattaforma è progettata per collegarsi alle sorgenti reali senza modifiche architetturali.
+  </p>
+</section>
+
+<!-- ============ SCENARI ============ -->
+<section id="scenari">
+  <div class="kicker rv">02 · Intelligenza selettiva</div>
+  <h2 class="rv d1">Non tutto sempre.<br>Solo ciò che serve, quando serve.</h2>
+  <p class="lead rv d2">
+    Il catalogo conta circa cento motori analitici. Un <strong>gating adattivo</strong> — il motore brevettato —
+    assegna a ciascuno un punteggio di efficienza e accende solo il sottoinsieme ottimale per il contesto.
+    Una decisione di credito non è un evento di frode; un evento di frode non è una due diligence su una startup AI. Il sistema cambia configurazione, non codice.
+  </p>
+
+  <div class="scn-tabs rv d2" id="scnTabs"></div>
+
+  <div class="scn-stage rv d3">
+    <div class="gate-panel">
+      <div class="gate-head">
+        <span class="t">Gating adattivo · catalogo motori</span>
+        <span class="gate-count"><b id="gActive">0</b> / ~100 attivi</span>
+      </div>
+      <div id="engineGrid"></div>
+      <div class="gate-formula">
+        <span class="f">E(M<sub>i</sub>) = α·Acc − β·Lat − γ·En + δ·Rob&nbsp;&nbsp;·&nbsp;&nbsp;attivo se E ≥ E<sub>max</sub> − ε(t)</span>
+        <span class="pat">BREVETTO 11.E2118.12.IT.7 · PENDING</span>
+      </div>
+      <div class="wbars">
+        <div class="wb"><div class="wl"><span>α · accuratezza</span><b id="wA">—</b></div><div class="tr"><div class="fl" id="bA"></div></div></div>
+        <div class="wb"><div class="wl"><span>β · latenza</span><b id="wB">—</b></div><div class="tr"><div class="fl" id="bB"></div></div></div>
+        <div class="wb"><div class="wl"><span>γ · energia</span><b id="wG">—</b></div><div class="tr"><div class="fl" id="bG"></div></div></div>
+        <div class="wb"><div class="wl"><span>δ · robustezza</span><b id="wD">—</b></div><div class="tr"><div class="fl" id="bD"></div></div></div>
+      </div>
+      <div class="gate-metrics">
+        <div class="gm"><div class="v" id="mCiclo">—</div><div class="k">ciclo di analisi</div></div>
+        <div class="gm"><div class="v" id="mPot">—</div><div class="k">potenza media</div></div>
+        <div class="gm"><div class="v" id="mRisp">—</div><div class="k">risparmio vs. tutto acceso</div></div>
+      </div>
+    </div>
+    <div class="pipe">
+      <span class="t">Pipeline attiva · L1 → L5</span>
+      <div id="pipeBody"></div>
+    </div>
+  </div>
+
+  <div class="panel metanet rv d3" style="position:relative">
+    <div class="gate-head">
+      <span class="t">Meta-rete · ogni nodo è una rete</span>
+      <span class="gate-count" id="mnLabel"></span>
+    </div>
+    <canvas id="mnCanvas"></canvas>
+    <div class="mn-tip" id="mnTip"></div>
+    <p class="mn-cap"><b>Come leggere questa vista.</b> Ogni nodo è un motore analitico — e ciascuno è, a sua volta,
+    una rete: la trama interna è visibile in trasparenza. Il flusso parte dai dati (sinistra), attraversa
+    soltanto i motori accesi dal gating, converge nella meta-fusione e arriva al Decision Hub.
+    È questo il senso di <b>meta-intelligenza</b>: non un modello più grande, ma la composizione governata di molti modelli specialistici.
+    Passare il cursore su un nodo per il dettaglio.</p>
+  </div>
+
+  <div class="outs rv d3">
+    <span class="t">Decision Hub · raccomandazioni generate</span>
+    <div class="out-grid" id="outGrid"></div>
+  </div>
+  <p class="note">
+    <b>Cosa osservare.</b> Cambiando scenario cambiano i pesi del gating, il sottoinsieme di motori attivi, i tempi di ciclo
+    e la potenza impegnata. La pipeline non viene riscritta: viene <b>ricomposta</b>. Valori di scenario simulati,
+    coerenti con gli esempi numerici depositati nel brevetto.
+  </p>
+</section>
+
+<!-- ============ FINANZA OPERATIVA (Demo B) ============ -->
+<section id="finanza">
+  <div class="kicker rv">02b · La stessa grammatica, anche per l'economia</div>
+  <h2 class="rv d1">Dal segnale al numero economico,<br>senza salti di fede.</h2>
+  <p class="lead rv d2">
+    Ogni KPI economico-operativo eredita la <strong>catena di prova del segnale</strong> che lo genera:
+    un segnale di rischio misurato diventa una perdita attesa stimata, un blocco tempestivo diventa una perdita evitata,
+    uno scenario avverso diventa una banda di sensitività. La piattaforma <strong>misura e stima</strong>;
+    le valutazioni di investimento restano fuori dal suo perimetro.
+  </p>
+  <div class="fin-grid rv d2">
+    <div class="fin">
+      <div class="fh"><h4>Perdita attesa · tranche di credito</h4><div class="fv">€2,1M<small> ±7%</small></div></div>
+      <p>Perdita attesa sulla tranche, calcolata in continuo dai modelli attivi del gating, con confidenza calibrata. Banda al 90% propagata end-to-end. Coerente con i requisiti AI Act per i sistemi ad alto rischio.</p>
+      <canvas id="finDscr"></canvas>
+      <span class="src">Serie simulata · in esercizio: dati di pratica + bureau + macro, aggiornamento continuo</span>
+    </div>
+    <div class="fin">
+      <div class="fh"><h4>KPI ESG verificato · book SLL</h4><div class="fv">94%<small> ±2,1%</small></div></div>
+      <p>Quota di KPI di sostenibilità verificati in evidenza computabile sul book Sustainability Linked Loans, con incertezza esplicita. Riduce il rischio di contestazione e greenwashing.</p>
+      <canvas id="finRev"></canvas>
+      <span class="src">Serie simulata · in esercizio: misure ambientali + provenienza documentale + audit trail</span>
+    </div>
+    <div class="fin">
+      <div class="fh"><h4>Sensitività di scenario → perdita attesa</h4><div class="fv">−2,4 / −4,1%<small> EL</small></div></div>
+      <p>Lo scenario ad alto rischio attivo in questa demo si traduce in un intervallo di impatto sulla perdita attesa del book (orizzonte trimestrale, confidenza 90%). Il numero economico nasce dallo stesso ciclo di analisi del segnale di rischio: stessa catena, stessa firma.</p>
+      <span class="src">Stima simulata · collegata allo scenario «Decisione di credito» della sezione precedente</span>
+    </div>
+    <div class="fin">
+      <div class="fh"><h4>Rendicontazione verso finanziatori</h4><div class="fv">SFDR · Tassonomia</div></div>
+      <p>Capex e opex etichettati per allineamento alla Tassonomia UE, emissioni evitate contabilizzate in continuo, KPI GRESB con provenienza documentata. Il formato è quello che banche e standard setter già chiedono: misura, non narrativa.</p>
+      <span class="src">Struttura reale · valori dimostrativi</span>
+    </div>
+  </div>
+  <p class="note"><b>Perimetro.</b> Questo modulo produce misure e stime economico-operative a livello di asset, con incertezza
+  esplicita e catena di prova. Non produce valutazioni d'azienda, pricing di acquisizioni né raccomandazioni
+  di investimento: quelle competenze restano agli organi deliberativi, come definito nella sezione Governance.</p>
+</section>
+
+<!-- ============ TRACCIABILITÀ ============ -->
+<section id="tracciabilita">
+  <div class="kicker rv">03 · Nessuna black box</div>
+  <h2 class="rv d1">Ogni numero risale alla sua origine.</h2>
+  <p class="lead rv d2">
+    Un comitato di investimento non può fidarsi di un punteggio: deve poterlo <strong>ripercorrere</strong>.
+    Ogni output di Ennous porta con sé la propria catena di prova — sorgente, versione del modello, pesi di fusione,
+    incertezza — firmata e immutabile. È il formato che finanziatori, auditor e standard setter già chiedono.
+  </p>
+  <div class="tr-grid rv d2">
+    <div class="tr-card"><span class="ic">⛓</span><h3>Catena di prova</h3><p>Dato grezzo → descrittore → motore → fusione → decisione. Ogni passaggio è registrato con hash, timestamp e versione. La prova si apre da qualunque raccomandazione, con un clic.</p></div>
+    <div class="tr-card"><span class="ic">±</span><h3>Incertezza esplicita</h3><p>Ogni misura espone confidenza e intervallo. Le stime sono dichiarate come stime, le misure come misure, i dati simulati come simulati. La distinzione è strutturale, non tipografica.</p></div>
+    <div class="tr-card"><span class="ic">⊘</span><h3>Rationale leggibile</h3><p>Le spiegazioni in linguaggio naturale sono generate a valle della decisione, mai al posto della decisione. Il testo racconta il calcolo; non lo sostituisce.</p></div>
+  </div>
+  <p class="note"><b>Dove trovarla.</b> Il pulsante «Catena di prova», presente su ogni raccomandazione della sezione Scenari, apre il percorso completo dal dato grezzo alla decisione.</p>
+</section>
+
+<!-- ============ GOVERNANCE ============ -->
+<section id="governance">
+  <div class="kicker rv">04 · Perimetri chiari</div>
+  <h2 class="rv d1">L'intelligenza operativa si ferma<br>dove inizia la valutazione finanziaria.</h2>
+  <p class="lead rv d2">
+    La separazione è un vincolo di progetto, non una promessa. Ennous produce misure, scenari e raccomandazioni
+    tecniche; le valutazioni economiche e le decisioni di investimento restano nel perimetro degli organi
+    della NewCo, su dati che la piattaforma certifica ma non interpreta finanziariamente.
+  </p>
+  <div class="gov rv d2">
+    <div class="gov-col">
+      <h3>Dentro Ennous</h3>
+      <div class="sub">Intelligenza operativa, tracciabile per costruzione</div>
+      <ul>
+        <li>Monitoraggio continuo ed early-warning su workload AI, portafogli credito e stream pagamenti</li>
+        <li>Digital twin di workload, modello e portafoglio</li>
+        <li>Scenari what-if su decisioni di credito, eventi di frode, acquisizioni</li>
+        <li>KPI di rischio, compliance ed ESG con catena di prova (EU AI Act, DORA, NIS 2, SFDR)</li>
+        <li>KPI economico-operativi — perdita attesa, esposizione, KPI ESG verificati — come stime con incertezza e catena di prova</li>
+        <li>Dossier tecnico di due diligence su soluzioni AI di terzi / target M&amp;A</li>
+      </ul>
+    </div>
+    <div class="gov-sep"><div class="bar"></div><span class="lbl">perimetro di separazione</span><div class="bar"></div></div>
+    <div class="gov-col">
+      <h3>Fuori da Ennous</h3>
+      <div class="sub">Riservato agli organi deliberativi</div>
+      <ul>
+        <li>Valutazioni economico-finanziarie e pricing degli asset</li>
+        <li>Decisioni di investimento e disinvestimento</li>
+        <li>Rapporti con finanziatori, soci e concedenti</li>
+        <li>Strategia di portafoglio della NewCo</li>
+      </ul>
+    </div>
+  </div>
+  <div class="kpi-row rv d3">
+    <div class="kpi"><div class="v">+329%</div><div class="l">crescita del valore della produzione 2025, con governance dei modelli auditabile</div><span class="tag pub">fonte pubblica · AATech</span></div>
+    <div class="kpi"><div class="v">2023</div><div class="l">quotata su Euronext Growth Milan · Società Benefit</div><span class="tag pub">fonte pubblica</span></div>
+    <div class="kpi"><div class="v">&gt;80%</div><div class="l">ore GPU risparmiate dal gating, a parità di accuratezza (±1 punto)</div><span class="tag mis">misurato · piattaforma</span></div>
+    <div class="kpi"><div class="v">0,894</div><div class="l">copertura conformal misurata (target 0,90 · backtest 6.745 decisioni)</div><span class="tag mis">misurato · piattaforma</span></div>
+  </div>
+  <p class="note"><b>Accountability.</b> Una Società Benefit quotata che serve banche e asset manager risponde al mercato e ai propri clienti vigilati:
+  la difendibilità delle misure non è un requisito formale, è la condizione del mandato. Sotto EU AI Act, DORA e NIS 2
+  la governance dei modelli si difende con catena di prova, non con dichiarazioni.</p>
+</section>
+
+<!-- ============ ARCHITETTURA ============ -->
+<section id="architettura">
+  <div class="kicker rv">05 · Architettura</div>
+  <h2 class="rv d1">Cinque livelli, una catena chiusa.</h2>
+  <p class="lead rv d2">
+    L'architettura nasce nel dominio più difficile disponibile — i sistemi biologici — ed è depositata per il dominio
+    geo-ambientale. La struttura è <strong>domain-agnostic per costruzione</strong>: il dominio cambia,
+    la logica resta. Scalare significa aggiungere motori al catalogo, non riscrivere il sistema.
+  </p>
+  <div class="arch rv d2">
+    <div class="arch-l"><span class="lv">L1</span><div class="fx"><b>Sensing &amp; Data Intake</b><span>Sensori in situ, satellite, SCADA, log operativi, dati climatici. Metadati FAIR, provenienza e incertezza esplicite.</span></div><div class="rel">Gli asset in portafoglio parlano lingue diverse: serve un ingresso dati unico, con qualità misurata all'origine.</div></div>
+    <div class="arch-l"><span class="lv">L2</span><div class="fx"><b>Feature Fabric</b><span>Da dato grezzo a indici e descrittori multi-scala, normalizzati cross-dominio e versionati.</span></div><div class="rel">AI Infrastructure, credito, garanzie, ESG e venture diventano leggibili con la stessa grammatica.</div></div>
+    <div class="arch-l"><span class="lv">L3</span><div class="fx"><b>Knowledge Engines</b><span>Catalogo di ~100 motori: simulatori fisici, reti neurali, PINN, modelli causali, digital twin, serie temporali.</span></div><div class="rel">Nessun modello è dominante su tutti i casi: serve una libreria intercambiabile, non un monolite.</div></div>
+    <div class="arch-l core"><span class="lv">L4</span><div class="fx"><b>Adaptive Gating · meccanismo brevettato</b><span>Selezione dinamica multi-obiettivo: accuratezza, latenza, energia, robustezza. Attiva solo la pipeline ottimale.</span></div><div class="rel">Efficienza computazionale come requisito di governance: tipicamente −80/90% di ore GPU rispetto a pipeline fisse, a parità di accuratezza dichiarata.</div></div>
+    <div class="arch-l"><span class="lv">L5</span><div class="fx"><b>Decision Hub &amp; Digital Twin</b><span>Mappe di rischio, what-if, raccomandazioni con confidenza, audit trail e spiegazioni leggibili.</span></div><div class="rel">L'analisi diventa decisione difendibile verso asset manager, comitato e stakeholder.</div></div>
+    <div class="arch-meta"><span class="lv">ML6 · ML7</span><div class="fx">Due meta-livelli in apprendimento continuo: <b>Meta-Insight</b> riusa le configurazioni ottimali fra domini (il costo marginale di intelligenza scende a ogni nuovo asset); <b>Meta-Pattern</b> sorveglia drift e robustezza nel tempo, con fallback automatico su simulatori ad alta fedeltà.</div></div>
+  </div>
+  <div class="ip-note rv d3">
+    <span class="ip-chip"><b>Brevetto Geo-Driven</b> · 11.E2118.12.IT.7 · dep. lug 2025 · EcoBubble SRL</span>
+    <span class="ip-chip"><b>Brevetto Bio-Driven</b> · 11.P2202.12.IT.1 · dep. mar 2025 · Plantiverse SRL</span>
+    <span class="ip-chip"><b>Validazione in campo</b> · 18.663 acquisizioni · 438.607 indici calcolati · ESA BIC Lazio</span>
+  </div>
+</section>
+
+<!-- ============ PERCORSO ============ -->
+<section id="percorso">
+  <div class="kicker rv">06 · Dalla demo al sistema</div>
+  <h2 class="rv d1">180 giorni per passare<br>dalle aspettative alle misure.</h2>
+  <p class="lead rv d2">
+    Questa demo mostra la logica; il pilota la verifica sui dati reali del portafoglio.
+    Tre workstream in parallelo, un perimetro definito, output misurabili. Al termine, la base documentata
+    su cui decidere — insieme — la costituzione della NewCo.
+  </p>
+  <div class="path rv d2">
+    <div class="ws"><span class="wn">WORKSTREAM A</span><h3>Natural Capital Evidence</h3><p>Baseline misurabile su un progetto AATECH Natural Capital: sorgenti dati, indicatori MRV, schema di audit trail, gap analysis rispetto agli standard internazionali di carbon accounting.</p></div>
+    <div class="ws"><span class="wn">WORKSTREAM B</span><h3>Geo-Asset Risk Baseline</h3><p>Logica Geo-Driven applicata a un asset fisico del portafoglio: matrice di rischio geo-ambientale, scoring iniziale, scenari what-if, formato executive per investment e asset management.</p></div>
+    <div class="ws"><span class="wn">WORKSTREAM C</span><h3>Portfolio Intelligence Blueprint</h3><p>La grammatica comune dei dati e dei KPI cross-asset: tassonomia dei segnali, modello dati L1–L5 adattato ad AATECH, roadmap MVP e ipotesi di governance del layer.</p></div>
+  </div>
+  <div class="endcap rv d3">
+    <div>
+      <h3>AATECH Lab → NewCo</h3>
+      <p>AATECH porta dominio, dati e priorità operative; Plantiverse porta architettura, IP e capacità tecnica.
+      La NewCo è il contesto in cui questa divisione produce valore invece di generare conflitti:
+      chi porta il dominio controlla la roadmap applicativa, chi porta l'architettura mantiene l'autonomia tecnica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM & VALIDAZIONE ============ -->
+<section id="team">
+  <div class="kicker rv">07 · Chi c'è dietro</div>
+  <h2 class="rv d1">Un'architettura ha bisogno<br>di chi la sappia difendere.</h2>
+  <p class="lead rv d2">
+    Il nucleo fondatore copre i blocchi critici dell'architettura: fisica dei sistemi complessi,
+    AI orchestration, infrastruttura, geospaziale, leggibilità operativa. Intorno, una rete di enti
+    pubblici di ricerca con un ruolo preciso: <strong>supervisione scientifica e validazione indipendente</strong>.
+  </p>
+
+  <div class="team-grid rv d2">
+    <div class="tm"><span class="role">CEO</span><h4>Nicola Nescatelli</h4><p>MSc Astrofisica. Project management, open innovation, traiettoria strategica. La formazione in fisica dei sistemi complessi è la base teorica della logica di orchestrazione adattiva.</p></div>
+    <div class="tm"><span class="role">CTO · Head of Data Science</span><h4>Andrea Procaccini</h4><p>PhD Fisica Teorica, co-autore con il Nobel Giorgio Parisi. Pipeline AI e modelli predittivi: il presidio teorico più forte del progetto.</p></div>
+    <div class="tm"><span class="role">IT Architect</span><h4>Fabio Pallini</h4><p>Integrazione hardware/software, AIoT, deployment edge. Co-inventore del brevetto Bio-Driven (11.P2202.12.IT.1).</p></div>
+    <div class="tm"><span class="role">Product Architecture · UI/UX</span><h4>Federico Di Vincenzo</h4><p>20 anni di esperienza in progettazione verde e CEA. Il presidio della leggibilità operativa del sistema.</p></div>
+    <div class="tm"><span class="role">Satellite & GIS Lead</span><h4>Leonardo Maria Giannini</h4><p>PhD Geologia, Sentinel-2, Galileo, analytics geospaziali. Direttamente rilevante per il verticale Geo-Driven e per gli asset distribuiti sul territorio.</p></div>
+    <div class="tm"><span class="role">Team operativo</span><h4>Statistica · Data engineering · Agronomia</h4><p>Competenze su statistica e modelli, data engineering, sviluppo IT, agronomia senior e sviluppo commerciale completano il nucleo.</p></div>
+  </div>
+
+  <div class="partner-grid rv d3">
+    <div class="pr hero-pr"><span class="pt">Ente validatore · MoU firmato giu 2025</span><span class="pn">CNR-IAC «Mauro Picone»</span><p>Accordo triennale con l'Istituto per le Applicazioni del Calcolo: validazione matematica dei modelli AI e predittivi, sviluppo di framework computazionali scalabili, candidature congiunte Horizon Europe. Obiettivo dichiarato della collaborazione: accuratezza 95% sui fattori di stress chiave. Le ipotesi aperte del progetto hanno un supervisore terzo e indipendente.</p></div>
+    <div class="pr hero-pr"><span class="pt">Partner scientifico · contratto di ricerca</span><span class="pn">Sapienza Università di Roma · Orto Botanico</span><p>Contratto di ricerca (€119.000) e dispositivi deployati presso l'Orto Botanico di Roma; growth chamber per addestramento e validazione in condizioni controllate. Direzione scientifica: Prof. Fabio Attorre (Direttore Orto Botanico), Prof. Luigi Faino (bioinformatica).</p></div>
+    <div class="pr"><span class="pt">Programmi istituzionali</span><span class="pn">ESA BIC Lazio · ICSC · ENEA · FAO</span><p>Incubazione ESA BIC Lazio completata (marzo 2026, €50.000 non diluitivi); grant ICSC — Centro Nazionale HPC, Big Data e Quantum Computing (€50.000); collaborazione ENEA su monitoraggio multispettrale; FAO Mountain Partnership.</p></div>
+    <div class="pr"><span class="pt">Advisor scientifici</span><span class="pn">Rete di supervisione</span><p>Dr. Mario Santoro (CNR-IAC, AI/ML e HPC), Prof. Fabio Attorre e Prof. Luigi Faino (Sapienza), Dr.ssa Donatella Del Bufalo (IRCCS Regina Elena), Dr. Giorgio Grussu (FAO Mountain Partnership).</p></div>
+  </div>
+
+  <div class="val-row rv d3">
+    <div class="kpi"><div class="v">18.663</div><div class="l">acquisizioni in campo su 661 piante monitorate</div><span class="tag mis">misurato</span></div>
+    <div class="kpi"><div class="v">438.607</div><div class="l">risultati di indici calcolati (78 per acquisizione)</div><span class="tag mis">misurato</span></div>
+    <div class="kpi"><div class="v">&gt;85%</div><div class="l">rilevazione pre-sintomatica · stress idrico/parassitario precoce</div><span class="tag mis">misurato</span></div>
+    <div class="kpi"><div class="v">TRL 4</div><div class="l">livello attuale · roadmap 4→5 in 12 mesi con CNR-IAC, Sapienza, FAO</div><span class="tag pub">dichiarato</span></div>
+  </div>
+  <p class="note"><b>Lettura corretta di questi numeri.</b> La validazione esiste nel dominio biologico-vegetale, il più difficile
+  disponibile; il trasferimento al dominio infrastrutturale è una mappatura architetturale diretta, ma resta
+  un'ipotesi da verificare sui dati reali del portafoglio. È esattamente ciò che il pilota misura — con
+  CNR-IAC e Sapienza nel ruolo di supervisori e validatori indipendenti.</p>
+</section>
+
+<footer>
+  <div class="fin">
+    <p>
+      <b>Ennous · AATECH — Edge Governance &amp; AI</b> — piattaforma dimostrativa preparata per il comitato AATECH.<br>
+      I riferimenti di portafoglio (impianti, capacità, riconoscimenti) derivano da fonti pubbliche del Gruppo AATECH.
+      Telemetria, punteggi di gating, raccomandazioni e catene di prova sono <b>simulati</b> a scopo illustrativo
+      e riproducono il comportamento progettato del sistema, secondo l'architettura depositata
+      (brevetti 11.E2118.12.IT.7 e 11.P2202.12.IT.1, pending). Nessun contenuto costituisce misura certificata
+      né raccomandazione di investimento. I KPI economici mostrati sono stime simulate a livello di asset e non costituiscono valutazioni finanziarie.
+    </p>
+    <div class="sig">
+      PLANTIVERSE SRL · Plant Driven Systems<br>
+      Roma · plantiverse.it<br>
+      <span style="color:var(--txt3)">Demo v1.0 · giugno 2026</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ AUDIT MODAL ============ -->
+<div id="auditModal" role="dialog" aria-modal="true">
+  <div class="audit-box">
+    <div class="ah"><h3 id="amTitle">Catena di prova</h3><button class="aclose" onclick="closeAudit()">×</button></div>
+    <div class="sub" id="amSub"></div>
+    <div class="chain" id="amChain"></div>
+    <button id="discBtn" class="disc-btn" onclick="toggleDisc()"><span class="di">⚖</span> Genera report di model-governance · AI Act / DORA</button>
+    <div id="amDisclosure" class="disc-wrap"></div>
+    <div class="audit-note">Catena dimostrativa con dati simulati: le impronte mostrate sono digest SHA-256 calcolati realmente
+    nel browser, passaggio per passaggio. In esercizio il registro è immutabile, firmato e marcato
+    temporalmente: un auditor ripercorre la decisione senza accesso privilegiato al sistema.</div>
+  </div>
+</div>
+
+<script>
+const ITALY_DOTS=[[352.5,624.3],[359.4,624.3],[366.3,624.3],[373.2,624.3],[352.5,615.0],[359.4,615.0],[366.3,615.0],[373.2,615.0],[380.1,615.0],[324.8,605.7],[338.7,605.7],[345.6,605.7],[352.5,605.7],[359.4,605.7],[366.3,605.7],[373.2,605.7],[380.1,605.7],[387.0,605.7],[317.9,596.4],[324.8,596.4],[331.7,596.4],[338.7,596.4],[345.6,596.4],[352.5,596.4],[359.4,596.4],[366.3,596.4],[373.2,596.4],[380.1,596.4],[297.2,587.1],[304.1,587.1],[311.0,587.1],[317.9,587.1],[324.8,587.1],[331.7,587.1],[338.7,587.1],[345.6,587.1],[352.5,587.1],[359.4,587.1],[366.3,587.1],[373.2,587.1],[283.4,577.8],[290.3,577.8],[297.2,577.8],[304.1,577.8],[311.0,577.8],[317.9,577.8],[324.8,577.8],[331.7,577.8],[338.7,577.8],[345.6,577.8],[352.5,577.8],[359.4,577.8],[366.3,577.8],[373.2,577.8],[380.1,577.8],[262.6,568.5],[269.5,568.5],[276.4,568.5],[283.4,568.5],[290.3,568.5],[297.2,568.5],[304.1,568.5],[311.0,568.5],[317.9,568.5],[324.8,568.5],[331.7,568.5],[338.7,568.5],[345.6,568.5],[352.5,568.5],[359.4,568.5],[366.3,568.5],[373.2,568.5],[380.1,568.5],[262.6,559.2],[269.5,559.2],[276.4,559.2],[283.4,559.2],[290.3,559.2],[297.2,559.2],[304.1,559.2],[311.0,559.2],[317.9,559.2],[324.8,559.2],[331.7,559.2],[338.7,559.2],[345.6,559.2],[352.5,559.2],[359.4,559.2],[366.3,559.2],[373.2,559.2],[380.1,559.2],[387.0,559.2],[269.5,549.9],[276.4,549.9],[290.3,549.9],[297.2,549.9],[304.1,549.9],[352.5,549.9],[359.4,549.9],[366.3,549.9],[373.2,549.9],[380.1,549.9],[387.0,549.9],[393.9,549.9],[407.8,549.9],[414.7,549.9],[421.6,549.9],[290.3,540.6],[297.2,540.6],[387.0,540.6],[393.9,540.6],[407.8,540.6],[414.7,540.6],[421.6,540.6],[428.5,540.6],[414.7,531.3],[421.6,531.3],[428.5,531.3],[435.4,531.3],[421.6,522.0],[428.5,522.0],[435.4,522.0],[442.3,522.0],[414.7,512.7],[421.6,512.7],[428.5,512.7],[435.4,512.7],[442.3,512.7],[435.4,503.4],[442.3,503.4],[89.8,494.1],[96.8,494.1],[103.7,494.1],[428.5,494.1],[435.4,494.1],[442.3,494.1],[449.2,494.1],[456.1,494.1],[463.1,494.1],[470.0,494.1],[89.8,484.8],[96.8,484.8],[103.7,484.8],[428.5,484.8],[435.4,484.8],[442.3,484.8],[449.2,484.8],[456.1,484.8],[463.1,484.8],[82.9,475.5],[89.8,475.5],[96.8,475.5],[103.7,475.5],[110.6,475.5],[117.5,475.5],[124.4,475.5],[131.3,475.5],[421.6,475.5],[428.5,475.5],[435.4,475.5],[442.3,475.5],[449.2,475.5],[456.1,475.5],[463.1,475.5],[82.9,466.2],[89.8,466.2],[96.8,466.2],[103.7,466.2],[110.6,466.2],[117.5,466.2],[124.4,466.2],[131.3,466.2],[421.6,466.2],[428.5,466.2],[435.4,466.2],[442.3,466.2],[449.2,466.2],[456.1,466.2],[463.1,466.2],[89.8,456.9],[96.8,456.9],[103.7,456.9],[110.6,456.9],[117.5,456.9],[124.4,456.9],[131.3,456.9],[414.7,456.9],[421.6,456.9],[428.5,456.9],[435.4,456.9],[442.3,456.9],[449.2,456.9],[82.9,447.6],[89.8,447.6],[96.8,447.6],[103.7,447.6],[110.6,447.6],[117.5,447.6],[124.4,447.6],[131.3,447.6],[414.7,447.6],[421.6,447.6],[428.5,447.6],[435.4,447.6],[89.8,438.3],[96.8,438.3],[103.7,438.3],[110.6,438.3],[117.5,438.3],[124.4,438.3],[131.3,438.3],[414.7,438.3],[421.6,438.3],[428.5,438.3],[435.4,438.3],[442.3,438.3],[518.3,438.3],[525.3,438.3],[82.9,429.0],[89.8,429.0],[96.8,429.0],[103.7,429.0],[110.6,429.0],[117.5,429.0],[124.4,429.0],[131.3,429.0],[138.2,429.0],[393.9,429.0],[407.8,429.0],[414.7,429.0],[421.6,429.0],[428.5,429.0],[435.4,429.0],[442.3,429.0],[511.4,429.0],[518.3,429.0],[525.3,429.0],[89.8,419.7],[96.8,419.7],[103.7,419.7],[110.6,419.7],[117.5,419.7],[124.4,419.7],[131.3,419.7],[380.1,419.7],[387.0,419.7],[393.9,419.7],[400.9,419.7],[407.8,419.7],[414.7,419.7],[421.6,419.7],[428.5,419.7],[435.4,419.7],[442.3,419.7],[449.2,419.7],[511.4,419.7],[518.3,419.7],[525.3,419.7],[82.9,410.4],[89.8,410.4],[96.8,410.4],[103.7,410.4],[110.6,410.4],[117.5,410.4],[124.4,410.4],[131.3,410.4],[138.2,410.4],[380.1,410.4],[387.0,410.4],[393.9,410.4],[400.9,410.4],[407.8,410.4],[414.7,410.4],[421.6,410.4],[428.5,410.4],[435.4,410.4],[442.3,410.4],[449.2,410.4],[456.1,410.4],[483.8,410.4],[490.7,410.4],[497.6,410.4],[504.5,410.4],[511.4,410.4],[518.3,410.4],[82.9,401.1],[89.8,401.1],[96.8,401.1],[103.7,401.1],[110.6,401.1],[117.5,401.1],[124.4,401.1],[131.3,401.1],[138.2,401.1],[373.2,401.1],[380.1,401.1],[387.0,401.1],[393.9,401.1],[400.9,401.1],[407.8,401.1],[414.7,401.1],[421.6,401.1],[428.5,401.1],[435.4,401.1],[442.3,401.1],[449.2,401.1],[456.1,401.1],[463.1,401.1],[470.0,401.1],[476.9,401.1],[483.8,401.1],[490.7,401.1],[497.6,401.1],[504.5,401.1],[511.4,401.1],[76.0,391.8],[82.9,391.8],[89.8,391.8],[96.8,391.8],[103.7,391.8],[110.6,391.8],[117.5,391.8],[124.4,391.8],[131.3,391.8],[138.2,391.8],[352.5,391.8],[359.4,391.8],[366.3,391.8],[373.2,391.8],[380.1,391.8],[387.0,391.8],[393.9,391.8],[400.9,391.8],[407.8,391.8],[414.7,391.8],[421.6,391.8],[428.5,391.8],[435.4,391.8],[442.3,391.8],[449.2,391.8],[456.1,391.8],[463.1,391.8],[470.0,391.8],[476.9,391.8],[483.8,391.8],[490.7,391.8],[497.6,391.8],[504.5,391.8],[76.0,382.5],[89.8,382.5],[96.8,382.5],[103.7,382.5],[110.6,382.5],[117.5,382.5],[124.4,382.5],[131.3,382.5],[338.7,382.5],[345.6,382.5],[352.5,382.5],[359.4,382.5],[366.3,382.5],[373.2,382.5],[380.1,382.5],[387.0,382.5],[393.9,382.5],[400.9,382.5],[407.8,382.5],[414.7,382.5],[421.6,382.5],[428.5,382.5],[435.4,382.5],[442.3,382.5],[449.2,382.5],[456.1,382.5],[463.1,382.5],[470.0,382.5],[476.9,382.5],[483.8,382.5],[103.7,373.2],[110.6,373.2],[117.5,373.2],[124.4,373.2],[131.3,373.2],[331.7,373.2],[338.7,373.2],[345.6,373.2],[352.5,373.2],[359.4,373.2],[366.3,373.2],[373.2,373.2],[380.1,373.2],[387.0,373.2],[393.9,373.2],[400.9,373.2],[407.8,373.2],[414.7,373.2],[421.6,373.2],[428.5,373.2],[435.4,373.2],[442.3,373.2],[449.2,373.2],[456.1,373.2],[463.1,373.2],[470.0,373.2],[117.5,363.9],[124.4,363.9],[324.8,363.9],[331.7,363.9],[338.7,363.9],[345.6,363.9],[352.5,363.9],[359.4,363.9],[366.3,363.9],[373.2,363.9],[380.1,363.9],[387.0,363.9],[393.9,363.9],[400.9,363.9],[407.8,363.9],[414.7,363.9],[421.6,363.9],[428.5,363.9],[435.4,363.9],[442.3,363.9],[449.2,363.9],[456.1,363.9],[290.3,354.6],[304.1,354.6],[311.0,354.6],[317.9,354.6],[324.8,354.6],[331.7,354.6],[338.7,354.6],[345.6,354.6],[352.5,354.6],[359.4,354.6],[366.3,354.6],[373.2,354.6],[380.1,354.6],[387.0,354.6],[393.9,354.6],[400.9,354.6],[407.8,354.6],[414.7,354.6],[421.6,354.6],[428.5,354.6],[435.4,354.6],[276.4,345.3],[283.4,345.3],[290.3,345.3],[297.2,345.3],[304.1,345.3],[311.0,345.3],[317.9,345.3],[324.8,345.3],[331.7,345.3],[338.7,345.3],[345.6,345.3],[352.5,345.3],[359.4,345.3],[366.3,345.3],[373.2,345.3],[380.1,345.3],[387.0,345.3],[393.9,345.3],[400.9,345.3],[407.8,345.3],[414.7,345.3],[262.6,336.0],[269.5,336.0],[276.4,336.0],[283.4,336.0],[290.3,336.0],[297.2,336.0],[304.1,336.0],[311.0,336.0],[317.9,336.0],[324.8,336.0],[331.7,336.0],[338.7,336.0],[345.6,336.0],[352.5,336.0],[359.4,336.0],[366.3,336.0],[373.2,336.0],[380.1,336.0],[387.0,336.0],[393.9,336.0],[400.9,336.0],[407.8,336.0],[255.7,326.7],[262.6,326.7],[269.5,326.7],[276.4,326.7],[283.4,326.7],[290.3,326.7],[297.2,326.7],[304.1,326.7],[311.0,326.7],[317.9,326.7],[324.8,326.7],[331.7,326.7],[338.7,326.7],[345.6,326.7],[352.5,326.7],[359.4,326.7],[366.3,326.7],[373.2,326.7],[380.1,326.7],[387.0,326.7],[393.9,326.7],[400.9,326.7],[407.8,326.7],[414.7,326.7],[421.6,326.7],[248.8,317.4],[255.7,317.4],[262.6,317.4],[269.5,317.4],[276.4,317.4],[283.4,317.4],[290.3,317.4],[297.2,317.4],[304.1,317.4],[311.0,317.4],[317.9,317.4],[324.8,317.4],[331.7,317.4],[338.7,317.4],[345.6,317.4],[352.5,317.4],[359.4,317.4],[366.3,317.4],[373.2,317.4],[380.1,317.4],[387.0,317.4],[400.9,317.4],[407.8,317.4],[414.7,317.4],[421.6,317.4],[235.0,308.1],[241.9,308.1],[248.8,308.1],[255.7,308.1],[262.6,308.1],[269.5,308.1],[276.4,308.1],[283.4,308.1],[290.3,308.1],[297.2,308.1],[304.1,308.1],[311.0,308.1],[317.9,308.1],[324.8,308.1],[331.7,308.1],[338.7,308.1],[345.6,308.1],[352.5,308.1],[359.4,308.1],[228.1,298.8],[235.0,298.8],[241.9,298.8],[248.8,298.8],[255.7,298.8],[262.6,298.8],[269.5,298.8],[276.4,298.8],[283.4,298.8],[290.3,298.8],[297.2,298.8],[304.1,298.8],[311.0,298.8],[317.9,298.8],[324.8,298.8],[331.7,298.8],[338.7,298.8],[345.6,298.8],[352.5,298.8],[221.2,289.5],[228.1,289.5],[235.0,289.5],[241.9,289.5],[248.8,289.5],[255.7,289.5],[262.6,289.5],[269.5,289.5],[276.4,289.5],[283.4,289.5],[290.3,289.5],[297.2,289.5],[304.1,289.5],[311.0,289.5],[317.9,289.5],[324.8,289.5],[331.7,289.5],[338.7,289.5],[345.6,289.5],[207.3,280.2],[214.2,280.2],[221.2,280.2],[228.1,280.2],[235.0,280.2],[241.9,280.2],[248.8,280.2],[255.7,280.2],[262.6,280.2],[269.5,280.2],[276.4,280.2],[283.4,280.2],[290.3,280.2],[297.2,280.2],[304.1,280.2],[311.0,280.2],[317.9,280.2],[324.8,280.2],[331.7,280.2],[200.4,270.9],[207.3,270.9],[214.2,270.9],[221.2,270.9],[228.1,270.9],[235.0,270.9],[241.9,270.9],[248.8,270.9],[255.7,270.9],[262.6,270.9],[269.5,270.9],[276.4,270.9],[283.4,270.9],[290.3,270.9],[297.2,270.9],[304.1,270.9],[311.0,270.9],[317.9,270.9],[324.8,270.9],[186.6,261.6],[193.5,261.6],[200.4,261.6],[207.3,261.6],[214.2,261.6],[221.2,261.6],[228.1,261.6],[235.0,261.6],[241.9,261.6],[248.8,261.6],[255.7,261.6],[262.6,261.6],[269.5,261.6],[276.4,261.6],[283.4,261.6],[290.3,261.6],[297.2,261.6],[304.1,261.6],[311.0,261.6],[317.9,261.6],[324.8,261.6],[179.7,252.3],[186.6,252.3],[193.5,252.3],[200.4,252.3],[207.3,252.3],[214.2,252.3],[221.2,252.3],[228.1,252.3],[235.0,252.3],[241.9,252.3],[248.8,252.3],[255.7,252.3],[262.6,252.3],[269.5,252.3],[276.4,252.3],[283.4,252.3],[290.3,252.3],[297.2,252.3],[304.1,252.3],[311.0,252.3],[317.9,252.3],[179.7,243.0],[186.6,243.0],[193.5,243.0],[200.4,243.0],[207.3,243.0],[214.2,243.0],[221.2,243.0],[228.1,243.0],[235.0,243.0],[241.9,243.0],[248.8,243.0],[255.7,243.0],[262.6,243.0],[269.5,243.0],[276.4,243.0],[283.4,243.0],[290.3,243.0],[297.2,243.0],[304.1,243.0],[311.0,243.0],[317.9,243.0],[179.7,233.7],[186.6,233.7],[193.5,233.7],[200.4,233.7],[207.3,233.7],[214.2,233.7],[221.2,233.7],[228.1,233.7],[235.0,233.7],[241.9,233.7],[248.8,233.7],[255.7,233.7],[262.6,233.7],[269.5,233.7],[276.4,233.7],[283.4,233.7],[290.3,233.7],[297.2,233.7],[304.1,233.7],[311.0,233.7],[317.9,233.7],[172.8,224.4],[179.7,224.4],[186.6,224.4],[193.5,224.4],[200.4,224.4],[207.3,224.4],[214.2,224.4],[221.2,224.4],[228.1,224.4],[235.0,224.4],[241.9,224.4],[248.8,224.4],[255.7,224.4],[262.6,224.4],[269.5,224.4],[276.4,224.4],[283.4,224.4],[290.3,224.4],[297.2,224.4],[304.1,224.4],[311.0,224.4],[165.9,215.1],[172.8,215.1],[179.7,215.1],[186.6,215.1],[193.5,215.1],[200.4,215.1],[207.3,215.1],[214.2,215.1],[221.2,215.1],[228.1,215.1],[235.0,215.1],[241.9,215.1],[248.8,215.1],[255.7,215.1],[262.6,215.1],[269.5,215.1],[276.4,215.1],[283.4,215.1],[290.3,215.1],[297.2,215.1],[304.1,215.1],[165.9,205.8],[172.8,205.8],[179.7,205.8],[186.6,205.8],[193.5,205.8],[200.4,205.8],[207.3,205.8],[214.2,205.8],[221.2,205.8],[228.1,205.8],[235.0,205.8],[241.9,205.8],[248.8,205.8],[255.7,205.8],[262.6,205.8],[269.5,205.8],[276.4,205.8],[283.4,205.8],[290.3,205.8],[48.4,196.5],[55.3,196.5],[62.2,196.5],[165.9,196.5],[172.8,196.5],[179.7,196.5],[186.6,196.5],[193.5,196.5],[200.4,196.5],[207.3,196.5],[214.2,196.5],[221.2,196.5],[228.1,196.5],[235.0,196.5],[241.9,196.5],[248.8,196.5],[255.7,196.5],[269.5,196.5],[276.4,196.5],[55.3,187.2],[62.2,187.2],[69.1,187.2],[152.0,187.2],[159.0,187.2],[165.9,187.2],[172.8,187.2],[179.7,187.2],[186.6,187.2],[193.5,187.2],[200.4,187.2],[207.3,187.2],[214.2,187.2],[221.2,187.2],[228.1,187.2],[235.0,187.2],[241.9,187.2],[248.8,187.2],[255.7,187.2],[262.6,187.2],[20.7,177.9],[27.6,177.9],[34.6,177.9],[41.5,177.9],[48.4,177.9],[55.3,177.9],[62.2,177.9],[69.1,177.9],[76.0,177.9],[131.3,177.9],[138.2,177.9],[145.1,177.9],[152.0,177.9],[159.0,177.9],[165.9,177.9],[172.8,177.9],[179.7,177.9],[186.6,177.9],[193.5,177.9],[200.4,177.9],[207.3,177.9],[214.2,177.9],[221.2,177.9],[228.1,177.9],[235.0,177.9],[241.9,177.9],[248.8,177.9],[255.7,177.9],[13.8,168.6],[20.7,168.6],[27.6,168.6],[34.6,168.6],[41.5,168.6],[48.4,168.6],[55.3,168.6],[62.2,168.6],[69.1,168.6],[76.0,168.6],[82.9,168.6],[89.8,168.6],[110.6,168.6],[117.5,168.6],[124.4,168.6],[131.3,168.6],[138.2,168.6],[145.1,168.6],[152.0,168.6],[159.0,168.6],[165.9,168.6],[172.8,168.6],[179.7,168.6],[186.6,168.6],[193.5,168.6],[200.4,168.6],[207.3,168.6],[214.2,168.6],[221.2,168.6],[228.1,168.6],[235.0,168.6],[241.9,168.6],[248.8,168.6],[13.8,159.3],[20.7,159.3],[27.6,159.3],[34.6,159.3],[41.5,159.3],[48.4,159.3],[55.3,159.3],[62.2,159.3],[69.1,159.3],[76.0,159.3],[82.9,159.3],[89.8,159.3],[96.8,159.3],[103.7,159.3],[110.6,159.3],[117.5,159.3],[124.4,159.3],[131.3,159.3],[138.2,159.3],[145.1,159.3],[152.0,159.3],[159.0,159.3],[165.9,159.3],[172.8,159.3],[179.7,159.3],[186.6,159.3],[193.5,159.3],[200.4,159.3],[207.3,159.3],[214.2,159.3],[221.2,159.3],[228.1,159.3],[235.0,159.3],[241.9,159.3],[248.8,159.3],[27.6,150.0],[34.6,150.0],[41.5,150.0],[48.4,150.0],[55.3,150.0],[62.2,150.0],[69.1,150.0],[76.0,150.0],[82.9,150.0],[89.8,150.0],[96.8,150.0],[103.7,150.0],[110.6,150.0],[117.5,150.0],[124.4,150.0],[131.3,150.0],[138.2,150.0],[145.1,150.0],[152.0,150.0],[159.0,150.0],[165.9,150.0],[172.8,150.0],[179.7,150.0],[186.6,150.0],[193.5,150.0],[200.4,150.0],[207.3,150.0],[214.2,150.0],[221.2,150.0],[228.1,150.0],[235.0,150.0],[241.9,150.0],[248.8,150.0],[13.8,140.7],[20.7,140.7],[27.6,140.7],[34.6,140.7],[41.5,140.7],[48.4,140.7],[55.3,140.7],[62.2,140.7],[69.1,140.7],[76.0,140.7],[82.9,140.7],[89.8,140.7],[96.8,140.7],[103.7,140.7],[110.6,140.7],[117.5,140.7],[124.4,140.7],[131.3,140.7],[138.2,140.7],[145.1,140.7],[152.0,140.7],[159.0,140.7],[165.9,140.7],[172.8,140.7],[179.7,140.7],[186.6,140.7],[193.5,140.7],[200.4,140.7],[207.3,140.7],[214.2,140.7],[221.2,140.7],[228.1,140.7],[235.0,140.7],[241.9,140.7],[248.8,140.7],[255.7,140.7],[6.9,131.4],[13.8,131.4],[20.7,131.4],[27.6,131.4],[34.6,131.4],[41.5,131.4],[48.4,131.4],[55.3,131.4],[62.2,131.4],[69.1,131.4],[76.0,131.4],[82.9,131.4],[89.8,131.4],[96.8,131.4],[103.7,131.4],[110.6,131.4],[117.5,131.4],[124.4,131.4],[131.3,131.4],[138.2,131.4],[145.1,131.4],[152.0,131.4],[159.0,131.4],[165.9,131.4],[172.8,131.4],[179.7,131.4],[186.6,131.4],[193.5,131.4],[200.4,131.4],[207.3,131.4],[214.2,131.4],[221.2,131.4],[228.1,131.4],[235.0,131.4],[241.9,131.4],[248.8,131.4],[255.7,131.4],[13.8,122.1],[20.7,122.1],[27.6,122.1],[34.6,122.1],[41.5,122.1],[48.4,122.1],[55.3,122.1],[62.2,122.1],[69.1,122.1],[76.0,122.1],[82.9,122.1],[89.8,122.1],[96.8,122.1],[103.7,122.1],[110.6,122.1],[117.5,122.1],[124.4,122.1],[131.3,122.1],[138.2,122.1],[145.1,122.1],[152.0,122.1],[159.0,122.1],[165.9,122.1],[172.8,122.1],[179.7,122.1],[186.6,122.1],[193.5,122.1],[200.4,122.1],[207.3,122.1],[214.2,122.1],[221.2,122.1],[228.1,122.1],[235.0,122.1],[241.9,122.1],[248.8,122.1],[27.6,112.8],[34.6,112.8],[41.5,112.8],[48.4,112.8],[55.3,112.8],[62.2,112.8],[69.1,112.8],[76.0,112.8],[82.9,112.8],[89.8,112.8],[96.8,112.8],[103.7,112.8],[110.6,112.8],[117.5,112.8],[124.4,112.8],[131.3,112.8],[138.2,112.8],[145.1,112.8],[152.0,112.8],[159.0,112.8],[165.9,112.8],[172.8,112.8],[179.7,112.8],[186.6,112.8],[193.5,112.8],[200.4,112.8],[207.3,112.8],[214.2,112.8],[221.2,112.8],[228.1,112.8],[235.0,112.8],[241.9,112.8],[248.8,112.8],[20.7,103.5],[27.6,103.5],[34.6,103.5],[41.5,103.5],[48.4,103.5],[55.3,103.5],[62.2,103.5],[69.1,103.5],[76.0,103.5],[82.9,103.5],[89.8,103.5],[96.8,103.5],[103.7,103.5],[110.6,103.5],[117.5,103.5],[124.4,103.5],[131.3,103.5],[138.2,103.5],[145.1,103.5],[152.0,103.5],[159.0,103.5],[165.9,103.5],[172.8,103.5],[179.7,103.5],[186.6,103.5],[193.5,103.5],[200.4,103.5],[207.3,103.5],[214.2,103.5],[221.2,103.5],[228.1,103.5],[235.0,103.5],[241.9,103.5],[248.8,103.5],[255.7,103.5],[262.6,103.5],[20.7,94.2],[27.6,94.2],[34.6,94.2],[41.5,94.2],[48.4,94.2],[55.3,94.2],[62.2,94.2],[69.1,94.2],[76.0,94.2],[82.9,94.2],[89.8,94.2],[96.8,94.2],[103.7,94.2],[110.6,94.2],[117.5,94.2],[124.4,94.2],[131.3,94.2],[138.2,94.2],[145.1,94.2],[152.0,94.2],[159.0,94.2],[165.9,94.2],[172.8,94.2],[179.7,94.2],[186.6,94.2],[193.5,94.2],[200.4,94.2],[207.3,94.2],[214.2,94.2],[221.2,94.2],[228.1,94.2],[235.0,94.2],[241.9,94.2],[248.8,94.2],[255.7,94.2],[262.6,94.2],[269.5,94.2],[276.4,94.2],[283.4,94.2],[324.8,94.2],[13.8,84.9],[20.7,84.9],[27.6,84.9],[34.6,84.9],[41.5,84.9],[48.4,84.9],[55.3,84.9],[62.2,84.9],[69.1,84.9],[76.0,84.9],[82.9,84.9],[89.8,84.9],[96.8,84.9],[103.7,84.9],[110.6,84.9],[117.5,84.9],[124.4,84.9],[131.3,84.9],[138.2,84.9],[145.1,84.9],[152.0,84.9],[159.0,84.9],[165.9,84.9],[172.8,84.9],[179.7,84.9],[186.6,84.9],[193.5,84.9],[200.4,84.9],[207.3,84.9],[214.2,84.9],[221.2,84.9],[228.1,84.9],[235.0,84.9],[241.9,84.9],[248.8,84.9],[255.7,84.9],[262.6,84.9],[269.5,84.9],[276.4,84.9],[283.4,84.9],[290.3,84.9],[297.2,84.9],[304.1,84.9],[311.0,84.9],[41.5,75.6],[48.4,75.6],[62.2,75.6],[69.1,75.6],[76.0,75.6],[82.9,75.6],[89.8,75.6],[96.8,75.6],[110.6,75.6],[117.5,75.6],[124.4,75.6],[131.3,75.6],[138.2,75.6],[145.1,75.6],[152.0,75.6],[159.0,75.6],[165.9,75.6],[172.8,75.6],[179.7,75.6],[186.6,75.6],[193.5,75.6],[200.4,75.6],[207.3,75.6],[214.2,75.6],[221.2,75.6],[228.1,75.6],[235.0,75.6],[241.9,75.6],[248.8,75.6],[255.7,75.6],[262.6,75.6],[269.5,75.6],[276.4,75.6],[283.4,75.6],[290.3,75.6],[297.2,75.6],[304.1,75.6],[311.0,75.6],[69.1,66.3],[76.0,66.3],[82.9,66.3],[89.8,66.3],[96.8,66.3],[117.5,66.3],[124.4,66.3],[131.3,66.3],[138.2,66.3],[145.1,66.3],[152.0,66.3],[159.0,66.3],[165.9,66.3],[172.8,66.3],[179.7,66.3],[186.6,66.3],[193.5,66.3],[200.4,66.3],[207.3,66.3],[214.2,66.3],[221.2,66.3],[228.1,66.3],[235.0,66.3],[241.9,66.3],[248.8,66.3],[255.7,66.3],[262.6,66.3],[269.5,66.3],[276.4,66.3],[283.4,66.3],[290.3,66.3],[297.2,66.3],[304.1,66.3],[311.0,66.3],[69.1,57.0],[76.0,57.0],[124.4,57.0],[131.3,57.0],[138.2,57.0],[145.1,57.0],[152.0,57.0],[165.9,57.0],[172.8,57.0],[179.7,57.0],[186.6,57.0],[193.5,57.0],[200.4,57.0],[207.3,57.0],[214.2,57.0],[221.2,57.0],[228.1,57.0],[235.0,57.0],[241.9,57.0],[248.8,57.0],[255.7,57.0],[262.6,57.0],[269.5,57.0],[276.4,57.0],[283.4,57.0],[290.3,57.0],[297.2,57.0],[76.0,47.7],[82.9,47.7],[124.4,47.7],[159.0,47.7],[165.9,47.7],[172.8,47.7],[179.7,47.7],[186.6,47.7],[193.5,47.7],[200.4,47.7],[207.3,47.7],[214.2,47.7],[221.2,47.7],[228.1,47.7],[235.0,47.7],[241.9,47.7],[248.8,47.7],[255.7,47.7],[262.6,47.7],[269.5,47.7],[276.4,47.7],[283.4,47.7],[290.3,47.7],[297.2,47.7],[304.1,47.7],[159.0,38.4],[179.7,38.4],[186.6,38.4],[193.5,38.4],[200.4,38.4],[207.3,38.4],[214.2,38.4],[221.2,38.4],[228.1,38.4],[235.0,38.4],[241.9,38.4],[248.8,38.4],[255.7,38.4],[262.6,38.4],[269.5,38.4],[276.4,38.4],[283.4,38.4],[290.3,38.4],[297.2,38.4],[172.8,29.1],[179.7,29.1],[186.6,29.1],[193.5,29.1],[200.4,29.1],[207.3,29.1],[214.2,29.1],[221.2,29.1],[228.1,29.1],[235.0,29.1],[241.9,29.1],[248.8,29.1],[255.7,29.1],[200.4,19.8],[207.3,19.8],[214.2,19.8],[221.2,19.8],[228.1,19.8],[235.0,19.8],[241.9,19.8],[248.8,19.8],[241.9,10.5],[248.8,10.5]];
+
+/* ================= ASSETS ================= */
+const CLS = {
+  aiinfra:{c:'#d4a843', label:'AI Infrastructure'},
+  credito:{c:'#4cc3d9', label:'Credito'},
+  garanzie:{c:'#3fae6a', label:'Garanzie pubbliche'},
+  venture:{c:'#9b7fd4', label:'Platform · TaaS'},
+  esg:{c:'#7fd49b', label:'Modelli SLM · AML/ESG'}
+};
+const ASSETS = [
+ {id:'ai1', cls:'aiinfra', xy:[115.5,104.4], name:'AI Inference cluster · Milano', meta:'Stack edge sovrano · workload a bassa latenza per clienti banca', kpi:'Utilizzo GPU (%)', base:71, vr:.10, status:'Orchestrazione regolare', signals:['Quota motori attivi entro budget computazionale','Audit trail al passo di selezione aggiornato','Nessun workload ad alto rischio non tracciato']},
+ {id:'ai2', cls:'aiinfra', xy:[207.3,205.8], name:'AI Training HPC · nodo nord', meta:'Addestramento e retraining · pianificazione fair-share', kpi:'Ore GPU/giorno', base:1840, vr:.09, status:'Scheduling regolare', signals:['Riuso configurazioni pipeline (warm-start) attivo','Risparmio energia vs tutto-acceso contabilizzato']},
+ {id:'cr1', cls:'credito', xy:[262.6,318.6], name:'Portafoglio credito · retail', meta:'Credit scoring · sistema ad alto rischio AI Act', kpi:'Decisioni/giorno', base:5200, vr:.08, status:'Decisioni spiegabili e tracciate', signals:['Razionale e confidenza calibrata per ogni decisione','Deriva modello sotto soglia · re-gating non richiesto']},
+ {id:'gr1', cls:'garanzie', xy:[437.9,400.8], name:'Garanzie pubbliche · PMI', meta:'Gestione end-to-end garanzie · filiera CrescItalia', kpi:'Pratiche in lavorazione', base:880, vr:.07, status:'Esercizio regolare', signals:['Tracciabilità documentale completa','Tempi di istruttoria entro SLA']},
+ {id:'fr1', cls:'credito', xy:[383.5,360.0], name:'Stream AML/frodi · pagamenti', meta:'Rilevamento in tempo reale · requisiti DORA', kpi:'Eventi/min', base:340, vr:.14, status:'Sorveglianza attiva', signals:['Anomalie sotto soglia','Catena di prova pronta per la vigilanza']},
+ {id:'esg1', cls:'esg', xy:[272.0,330.0], name:'Book ESG/SLL · green lending', meta:'Sustainability Linked Loans · verifica KPI nel tempo', kpi:'KPI verificati (%)', base:92, vr:.05, status:'Verifica continua', signals:['KPI ambientali in evidenza computabile','Rischio contestazione / greenwashing in calo']},
+ {id:'pl1', cls:'venture', xy:[437.0,366.0], name:'Tenant Platform (TaaS) · banca', meta:'Tecnologia-as-a-Service · governance modelli offerta ai clienti', kpi:'Tenant attivi', base:14, vr:.06, status:'Multi-tenant stabile', signals:['Isolamento e fair-share verificati','Layer di governance esposto come capability']},
+ {id:'vc1', cls:'aiinfra', xy:[285.4,258.0], name:'Valutazione AI di terzi · target M&A', meta:'Modello di valutazione oggettiva e misurabile di soluzioni AI · supporto al piano acquisizioni', kpi:'Soluzioni in valutazione', base:23, vr:.10, status:'Valutazione attiva', signals:['Scoring di maturità, robustezza, compliance e deployment sovrano','Evidenza misurabile a supporto della due diligence tecnica']}
+];
+
+/* ================= SCENARIOS ================= */
+const SCENARIOS = [
+ {id:'quiete', ic:'◉', name:'Monitoraggio continuo', desc:'Stato di quiete: governance a basso consumo su tutti i workload e i portafogli.',
+  w:{a:.60,b:.15,g:.10,d:.15}, eps:'ε(t) rilassata · soft top-k', n:9, ciclo:'6 h', pot:'480 W', risp:'−91%',
+  fams:['g','','c','','v',''],
+  pipe:[
+   ['L1','Acquisizione continua','Telemetria stack AI, log credito/garanzie, stream pagamenti, KPI ESG · normalizzazione FAIR','batch'],
+   ['L2','Feature Fabric','Indici di utilizzo, segnali di rischio, pattern di domanda, gradienti di KPI','12 min'],
+   ['L3','9 motori attivi','LSTM serie storiche · CNN change-detection · digital twin workload · modello causale domanda','38 min'],
+   ['L4','Meta-fusione','Soglia rilassata: priorità ad accuratezza ed efficienza energetica','4 min'],
+   ['L5','Decision Hub','Baseline aggiornate, scostamenti, nessun allarme attivo','3 min']
+  ],
+  outs:[
+   {t:'Baseline di portafoglio aggiornata', c:97, lead:'ciclo 6 h', p:'Tutti i workload e i portafogli entro le bande attese. Tre segnali deboli in osservazione, nessuno sopra soglia.'},
+   {t:'Costo computazionale entro budget', c:90, lead:'continuo', p:'Quota motori attivi tipica intorno al 6%, variabile per scenario. Risparmio ore GPU vs tutto-acceso contabilizzato e tracciato.'},
+   {t:'Deriva modello · credito retail', c:86, lead:'trend 14 gg', p:'Lieve deriva sulla distribuzione di input. Promozione automatica a re-gating se persiste; nessuna azione irreversibile proposta.'}
+  ]},
+ {id:'credito', ic:'⚖', name:'Decisione di credito · alto rischio', desc:'Sistema ad alto rischio AI Act: decisione spiegabile e auditabile.',
+  w:{a:.50,b:.20,g:.15,d:.15}, eps:'ε(t) ristretta su dominio credito', n:6, ciclo:'45 min', pot:'390 W', risp:'−88%',
+  fams:['c'],
+  pipe:[
+   ['L1','Acquisizione mirata','Dati di pratica, bureau, transazionale, contesto macro · provenienza esplicita','6 s'],
+   ['L2','Feature Fabric','Feature di rischio multi-scala, segnali comportamentali, indicatori di sostenibilità','9 s'],
+   ['L3','6 motori attivi','GBM scoring · rete neurale tabellare · modello causale default · calibrazione conformal · regole di policy · LLM motivazione','24 s'],
+   ['L4','Meta-fusione','Pareto soft-max: accuratezza e robustezza prioritarie, output calibrato','4 s'],
+   ['L5','Decision Hub','Decisione con razionale esplicito, confidenza calibrata, audit trail per la vigilanza','5 s']
+  ],
+  outs:[
+   {t:'Perdita attesa · tranche di portafoglio', c:86, lead:'aggiornata 45 min', p:'Perdita attesa €2,1M ±7% (intervallo al 90%), con i pesi del gating sui modelli attivi. Pronta per la vigilanza.', star:true},
+   {t:'Decisione spiegabile · pratica retail', c:91, lead:'immediata', p:'Esito con razionale esplicito e confidenza calibrata. Coerente con i requisiti AI Act per i sistemi ad alto rischio.'},
+   {t:'Catena di prova per l\'auditor', c:93, lead:'immediata', p:'Ogni passaggio firmato e immutabile: dato, descrittore, motore, fusione, decisione. Riapribile senza accesso privilegiato.'}
+  ]},
+ {id:'frode', ic:'⚡', name:'Evento AML / frode', desc:'Anomalia sullo stream pagamenti: diagnosi rapida sotto requisiti DORA.',
+  w:{a:.35,b:.35,g:.20,d:.10}, eps:'ε(t) stretta · modalità rapida', n:5, ciclo:'38 s', pot:'340 W', risp:'−93%',
+  fams:['c'],
+  pipe:[
+   ['L1','Stream ad alta frequenza','Transazioni 1 Hz, segnali dispositivo, grafo controparti','4 s'],
+   ['L2','Feature Fabric','Embedding anomalia, firma comportamentale, feature di rete','7 s'],
+   ['L3','5 motori attivi','Autoencoder anomalia · GNN grafo controparti · CNN sequenze · regole AML · LLM briefing','18 s'],
+   ['L4','Meta-fusione','Priorità alla latenza: profilo rapido, accuratezza degradata < 1 punto','4 s'],
+   ['L5','Decision Hub','Allerta, azione contenitiva, motivazione tracciata','5 s']
+  ],
+  outs:[
+   {t:'Allerta: pattern compatibile con frode', c:89, lead:'38 s dall\'evento', p:'Firma compatibile con anomalia di rete, non con falso positivo noto. Severità moderata, blocco cautelativo proposto.', star:true},
+   {t:'Azione contenitiva proposta', c:92, lead:'immediata', p:'Sospensione cautelativa della singola operazione; il resto opera regolarmente. Nessuna azione irreversibile automatica.'},
+   {t:'Segnalazione tracciata', c:87, lead:'ciclo successivo', p:'Evidenza strutturata pronta per compliance e vigilanza, con catena di prova completa.'}
+  ]},
+ {id:'dd', ic:'⌖', name:'Due diligence · soluzione AI di terzi', desc:'Valutazione oggettiva e misurabile di una soluzione AI di terzi, a supporto del piano di acquisizioni.',
+  w:{a:.55,b:.10,g:.15,d:.20}, eps:'ε(t) ampia · profondità massima', n:11, ciclo:'4 h', pot:'520 W', risp:'−84%',
+  fams:['','g','c','v'],
+  pipe:[
+   ['L1','Acquisizione storica + attuale','Repository codice, modelli, documentazione, telemetria, contesto di mercato','batch'],
+   ['L2','Feature Fabric','Maturità tecnologica, qualità industriale, compliance, unicità del data moat','22 min'],
+   ['L3','11 motori attivi','Analisi codice · stima robustezza · scoring compliance · modello di mercato · LLM dossier · grafo dipendenze','2,8 h'],
+   ['L4','Meta-fusione','Robustezza prioritaria: stime conservative, incertezza propagata end-to-end','14 min'],
+   ['L5','Decision Hub','Dossier di due diligence con scoring, rischi e KPI verificabili nel tempo','18 min']
+  ],
+  outs:[
+   {t:'Scoring di investibilità', c:90, lead:'dossier 48 h', p:'Maturità tecnologica alta, deployment sovrano possibile. Due rischi di compliance da chiarire prima del closing.', star:true},
+   {t:'Rischi tecnici quantificati', c:85, lead:'orizzonte 24 mesi', p:'Dipendenza da un fornitore cloud non sovrano; data moat solido ma con lacune documentali. Mitigazioni proposte.'},
+   {t:'KPI verificabili post-closing', c:94, lead:'dalla firma', p:'La baseline diventa il primo stato del monitoraggio: la due diligence non termina al closing, diventa continua.'}
+  ]}
+];
+
+/* ================= AUDIT CHAINS ================= */
+function chainFor(scn, out){
+  const now = new Date();
+  const ts = (m)=>{const d=new Date(now-m*60000);return d.toISOString().replace('T',' ').slice(0,19)+' UTC'}
+  const H = s=>SHA256(s).slice(0,32);
+  const base = scn.id+out.t;
+  return [
+   {l:'L1 · DATO', h:'Acquisizione e armonizzazione', kv:[
+     ['sorgenti', scn.pipe[0][2].split('·')[0].trim()],
+     ['timestamp', ts(42)], ['modello dati','spatio-temporale comune · FAIR/OGC'],
+     ['hash', 'sha256:'+H(base+'L1')], ['qualità dato','DQ = 0,94 · completezza 99,1%']]},
+   {l:'L2 · DESCRITTORE', h:'Generazione feature e indici', kv:[
+     ['indici', scn.pipe[1][2]], ['versione','feature-fabric v2.4.1 · data contract #418'],
+     ['hash','sha256:'+H(base+'L2')]]},
+   {l:'L3 · MOTORI', h:scn.n+' motori attivi su 100 in catalogo', kv:[
+     ['selezione', scn.pipe[2][2]], ['punteggio medio E(Mᵢ)','0,'+(78+(H(base).charCodeAt(0)%14))],
+     ['pesi gating','α '+scn.w.a.toFixed(2)+' · β '+scn.w.b.toFixed(2)+' · γ '+scn.w.g.toFixed(2)+' · δ '+scn.w.d.toFixed(2)],
+     ['hash','sha256:'+H(base+'L3')]]},
+   {l:'L4 · FUSIONE', h:'Meta-fusione e gating adattivo', kv:[
+     ['criterio', scn.pipe[3][2]], ['soglia', scn.eps],
+     ['motori in stand-by', (100-scn.n)+' / 100'], ['hash','sha256:'+H(base+'L4')]]},
+   {l:'L5 · DECISIONE', h:out.t, kv:[
+     ['confidenza', out.c+'%'], ['orizzonte', out.lead],
+     ['rationale','generato a valle della decisione · LLM v3 · bilingue'],
+     ['firma finale','sha256:'+H(base+'L5')], ['registro','immutabile · replay disponibile']]}
+  ];
+}
+
+/* ================= MAP ================= */
+const svg = document.getElementById('italy');
+let dotHtml = '';
+for(const [x,y] of ITALY_DOTS){
+  dotHtml += `<circle cx="${x}" cy="${y}" r="1.7" fill="rgba(255,255,255,0.13)"/>`;
+}
+svg.innerHTML = dotHtml;
+const nodes = document.createElementNS('http://www.w3.org/2000/svg','g');
+svg.appendChild(nodes);
+
+function renderNodes(){
+  let h='';
+  for(const a of ASSETS){
+    const c = CLS[a.cls].c;
+    h+=`<g class="asset-node" data-id="${a.id}" transform="translate(${a.xy[0]},${a.xy[1]})">
+      <circle r="6" fill="${c}" opacity=".5" class="pulse" style="transform-origin:center;transform-box:fill-box"/>
+      <circle class="core" r="5" fill="${c}"/>
+      <circle r="14" fill="transparent"/>
+    </g>`;
+  }
+  nodes.innerHTML = h;
+  nodes.querySelectorAll('.asset-node').forEach(n=>{
+    n.addEventListener('click',()=>selectAsset(n.dataset.id));
+  });
+}
+renderNodes();
+
+const chipBox = document.getElementById('assetChips');
+chipBox.innerHTML = ASSETS.map(a=>`<button class="achip" data-id="${a.id}">${a.name.split('·')[1]?.trim()||a.name}</button>`).join('');
+chipBox.querySelectorAll('.achip').forEach(c=>c.addEventListener('click',()=>selectAsset(c.dataset.id)));
+
+function sparkline(canvas, base, vr, color){
+  const dpr = window.devicePixelRatio||1;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width=w*dpr; canvas.height=h*dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr,dpr);
+  let seed = base*7+vr*1000;
+  const rnd = ()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+  const pts=[]; let v=base;
+  for(let i=0;i<90;i++){ v += (rnd()-0.5)*base*vr*0.45 + Math.sin(i/9)*base*vr*0.12; v=Math.max(base*(1-vr*2.5),Math.min(base*(1+vr*2.5),v)); pts.push(v); }
+  const mn=Math.min(...pts), mx=Math.max(...pts), rg=(mx-mn)||1;
+  ctx.beginPath();
+  pts.forEach((p,i)=>{const x=i/(pts.length-1)*w, y=h-6-((p-mn)/rg)*(h-14); i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+  ctx.strokeStyle=color; ctx.lineWidth=1.6; ctx.stroke();
+  ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();
+  const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,color+'33'); g.addColorStop(1,color+'00');
+  ctx.fillStyle=g; ctx.fill();
+  return pts[pts.length-1];
+}
+
+function selectAsset(id){
+  const a = ASSETS.find(x=>x.id===id);
+  nodes.querySelectorAll('.asset-node').forEach(n=>n.classList.toggle('sel',n.dataset.id===id));
+  chipBox.querySelectorAll('.achip').forEach(c=>c.classList.toggle('sel',c.dataset.id===id));
+  const c = CLS[a.cls].c;
+  document.getElementById('assetCard').innerHTML = `
+    <span class="cls" style="color:${c}">${CLS[a.cls].label}</span>
+    <h3>${a.name}</h3>
+    <div class="meta">${a.meta}</div>
+    <span class="status"><i style="background:${c}"></i>${a.status}</span>
+    <div class="spark">
+      <canvas id="spk"></canvas>
+      <div class="sl"><span>${a.kpi} · 90 giorni</span><span id="spkLast"></span><span style="color:var(--gold)">telemetria simulata</span></div>
+    </div>
+    <div class="signals">${a.signals.map(s=>`<div class="sg">${s}</div>`).join('')}</div>`;
+  requestAnimationFrame(()=>{
+    const last = sparkline(document.getElementById('spk'), a.base, a.vr, c);
+    document.getElementById('spkLast').textContent = 'ultimo: '+last.toFixed(0);
+  });
+}
+selectAsset('ai1');
+
+/* ================= GATING / SCENARI ================= */
+const grid = document.getElementById('engineGrid');
+grid.innerHTML = Array.from({length:100},(_,i)=>`<div class="eng" data-i="${i}"></div>`).join('');
+const engEls = [...grid.children];
+
+const tabs = document.getElementById('scnTabs');
+tabs.innerHTML = SCENARIOS.map(s=>`
+  <button class="scn-tab" data-id="${s.id}">
+    <span class="ic">${s.ic}</span><h4>${s.name}</h4><p>${s.desc}</p>
+  </button>`).join('');
+tabs.querySelectorAll('.scn-tab').forEach(t=>t.addEventListener('click',()=>setScenario(t.dataset.id)));
+
+function pick(n, seedStr, fams){
+  let seed=0; for(const ch of seedStr) seed=(seed*31+ch.charCodeAt(0))>>>0;
+  const rnd=()=>{seed=(seed*1103515245+12345)>>>0;return seed/4294967296};
+  const set=new Set();
+  while(set.size<n) set.add(Math.floor(rnd()*100));
+  return [...set].map((i,k)=>({i, f:fams[k%fams.length]||''}));
+}
+
+let gateTimers=[];
+function setScenario(id){
+  const s = SCENARIOS.find(x=>x.id===id);
+  tabs.querySelectorAll('.scn-tab').forEach(t=>t.classList.toggle('sel',t.dataset.id===id));
+  gateTimers.forEach(clearTimeout); gateTimers=[];
+  engEls.forEach(e=>{e.className='eng'});
+  const chosen = pick(s.n, id, s.fams);
+  chosen.forEach((c,k)=>{
+    gateTimers.push(setTimeout(()=>{ engEls[c.i].className='eng on '+c.f; },150+k*90));
+  });
+  // counter
+  const cEl=document.getElementById('gActive');
+  let cur=0; const step=()=>{cur++; cEl.textContent=cur; if(cur<s.n) gateTimers.push(setTimeout(step,90))};
+  cEl.textContent=0; gateTimers.push(setTimeout(step,240));
+  // weights
+  const W=[['A',s.w.a],['B',s.w.b],['G',s.w.g],['D',s.w.d]];
+  for(const [k,v] of W){
+    document.getElementById('w'+k).textContent=v.toFixed(2);
+    document.getElementById('b'+k).style.width=(v*100/0.6*0.92)+'%';
+  }
+  document.getElementById('mCiclo').textContent=s.ciclo;
+  document.getElementById('mPot').textContent=s.pot;
+  document.getElementById('mRisp').textContent=s.risp;
+  if(window.__mnReady) mnSetScenario(s.id, s.name, s.n);
+  // pipeline
+  document.getElementById('pipeBody').innerHTML = s.pipe.map(p=>`
+    <div class="pl"><span class="lv">${p[0]}</span><div class="px"><b>${p[1]}</b><span>${p[2]}</span></div><span class="tm">${p[3]}</span></div>`).join('');
+  // outputs
+  document.getElementById('outGrid').innerHTML = s.outs.map((o,i)=>`
+    <div class="out" style="${o.star?'border-color:rgba(212,168,67,.45)':''}">
+      <div class="oh"><h4>${o.t}</h4><span class="conf"><b>${o.c}%</b><br>confidenza</span></div>
+      ${o.fin?'<span class="tag sim" style="align-self:flex-start">€ · stima simulata</span>':''}<p>${o.p}</p>
+      <span class="lead-t">Orizzonte: ${o.lead}</span>
+      <button class="audit-btn" onclick="openAudit('${s.id}',${i})">Catena di prova ⛓</button>
+    </div>`).join('');
+}
+setScenario('frode');
+
+/* ================= AUDIT ================= */
+function openAudit(sid, oi){
+  const s = SCENARIOS.find(x=>x.id===sid);
+  const o = s.outs[oi];
+  document.getElementById('amTitle').textContent = o.t;
+  document.getElementById('amSub').textContent = 'Scenario: '+s.name+' · confidenza '+o.c+'% · ogni passaggio è ripercorribile dal dato grezzo alla decisione.';
+  const chain = chainFor(s,o);
+  document.getElementById('amChain').innerHTML = chain.map(st=>`
+    <div class="cstep"><span class="cl">${st.l}</span><h5>${st.h}</h5>
+      <div class="kv">${st.kv.map(([k,v])=>`<span class="k">${k}</span><span class="v">${v}</span>`).join('')}</div>
+    </div>`).join('');
+  const l5 = chain[chain.length-1]; let sig='';
+  for(const kv of l5.kv){ if(String(kv[1]).indexOf('sha256:')===0) sig=kv[1]; }
+  document.getElementById('amDisclosure').innerHTML = `
+    <div class="disc-block">
+      <div class="disc-head"><span class="disc-badge">EU AI Act</span><span class="disc-badge alt">DORA</span><h4>Report di model-governance · pronto per la vigilanza</h4></div>
+      <p class="disc-intro">Generato dalla catena di prova qui sopra — pronto per la revisione del Compliance Officer prima dell'invio. Nessuna ri-digitazione: stessa firma della decisione.</p>
+      <div class="disc-leap">
+        <div class="dl"><span class="dl-k">C · Classificazione</span><p>Configurazione «${s.name}»: sistema trattato come ad alto rischio ai sensi dell'EU AI Act; perimetro e finalità tracciati a livello di pipeline, con sorveglianza umana prevista a valle della decisione.</p></div>
+        <div class="dl"><span class="dl-k">D · Dati &amp; qualità</span><p>Provenienza esplicita e qualità del dato verificate nella catena (DQ e completezza); integrità e disponibilità delle fonti coerenti con i requisiti DORA di resilienza operativa.</p></div>
+        <div class="dl"><span class="dl-k">P · Prestazione &amp; deriva</span><p>${o.t}: confidenza ${o.c}%, orizzonte ${o.lead}. ${o.p} Deriva monitorata in continuo con re-gating automatico; incertezza propagata end-to-end e dichiarata, non levigata.</p></div>
+        <div class="dl"><span class="dl-k">S · Sorveglianza &amp; registro</span><p>Razionale leggibile generato a valle, pesi di gating e versioni dei modelli registrati nel log immutabile. Firma di deposito: <code>${sig}</code></p></div>
+      </div>
+      <div class="disc-foot"><span>Allineato a EU AI Act · DORA · NIS 2</span><span>immutabile · replay disponibile · bozza per revisione</span></div>
+    </div>`;
+  document.getElementById('amDisclosure').classList.remove('open');
+  const b=document.getElementById('discBtn'); if(b) b.innerHTML='<span class="di">⚖</span> Genera report di model-governance · AI Act / DORA';
+  document.getElementById('auditModal').classList.add('open');
+}
+function toggleDisc(){
+  const w=document.getElementById('amDisclosure'); const open=w.classList.toggle('open');
+  document.getElementById('discBtn').innerHTML = open
+    ? '<span class="di">⚖</span> Nascondi report di model-governance'
+    : '<span class="di">⚖</span> Genera report di model-governance · AI Act / DORA';
+}
+function closeAudit(){document.getElementById('auditModal').classList.remove('open')}
+document.getElementById('auditModal').addEventListener('click',e=>{if(e.target.id==='auditModal')closeAudit()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAudit()});
+
+/* ================= REVEAL + COUNTERS ================= */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+const cio = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target, target=+el.dataset.count, suf=el.dataset.suffix||'', pre=el.dataset.prefix||'';
+    const t0=performance.now();
+    const tick=(t)=>{
+      const p=Math.min(1,(t-t0)/1400), ease=1-Math.pow(1-p,3);
+      el.textContent=pre+Math.round(target*ease)+suf;
+      if(p<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    cio.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+/* ================= SHA-256 (puro JS, sincrono — per la catena di prova) ================= */
+const SHA256 = (function(){
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const rr=(x,n)=>(x>>>n)|(x<<(32-n));
+  return function(msg){
+    const enc = new TextEncoder().encode(msg);
+    const l = enc.length, bl = l*8;
+    const pad = ((l+8)>>6)+1 << 6;
+    const m = new Uint8Array(pad); m.set(enc); m[l]=0x80;
+    new DataView(m.buffer).setUint32(pad-4, bl>>>0);
+    new DataView(m.buffer).setUint32(pad-8, Math.floor(bl/4294967296));
+    let h0=0x6a09e667,h1=0xbb67ae85,h2=0x3c6ef372,h3=0xa54ff53a,h4=0x510e527f,h5=0x9b05688c,h6=0x1f83d9ab,h7=0x5be0cd19;
+    const w = new Int32Array(64), dv = new DataView(m.buffer);
+    for(let i=0;i<pad;i+=64){
+      for(let t=0;t<16;t++) w[t]=dv.getInt32(i+t*4);
+      for(let t=16;t<64;t++){
+        const s0=rr(w[t-15],7)^rr(w[t-15],18)^(w[t-15]>>>3);
+        const s1=rr(w[t-2],17)^rr(w[t-2],19)^(w[t-2]>>>10);
+        w[t]=(w[t-16]+s0+w[t-7]+s1)|0;
+      }
+      let a=h0,b=h1,c=h2,d=h3,e=h4,f=h5,g=h6,h=h7;
+      for(let t=0;t<64;t++){
+        const S1=rr(e,6)^rr(e,11)^rr(e,25), ch=(e&f)^(~e&g);
+        const t1=(h+S1+ch+K[t]+w[t])|0;
+        const S0=rr(a,2)^rr(a,13)^rr(a,22), mj=(a&b)^(a&c)^(b&c);
+        const t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      h0=(h0+a)|0;h1=(h1+b)|0;h2=(h2+c)|0;h3=(h3+d)|0;h4=(h4+e)|0;h5=(h5+f)|0;h6=(h6+g)|0;h7=(h7+h)|0;
+    }
+    return [h0,h1,h2,h3,h4,h5,h6,h7].map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
+  };
+})();
+
+/* ================= META-RETE · ogni nodo è una rete ================= */
+const MN_ENGINES = [
+ {n:'GBM · scoring credito', f:'g'}, {n:'NN tabellare · default', f:'g'}, {n:'GNN · grafo controparti', f:'g'},
+ {n:'Conformal · calibrazione PD', f:'g'}, {n:'LSTM · serie macro', f:''}, {n:'AE · anomalia pagamenti', f:'c'},
+ {n:'Twin · workload inferenza', f:'c'}, {n:'CNN · sequenze transazioni', f:''}, {n:'RL · dispatch GPU', f:'c'},
+ {n:'Causale · rischio default', f:'v'}, {n:'Bayes · scoring compliance', f:'v'}, {n:'GNN · dipendenze software', f:'v'},
+ {n:'NLP · due diligence tecnica', f:'v'}, {n:'Transformer · prezzo di mercato', f:''}, {n:'Bayes · scoring territoriale', f:'v'},
+ {n:'CNN · documenti KYC', f:''}, {n:'Twin · infrastruttura AI', f:''}, {n:'Causale · domanda credito', f:''},
+ {n:'Q-kernel · fuori distribuzione', f:'c'}, {n:'LSTM · serie storiche asset', f:''}, {n:'GNN · rete pagamenti', f:'c'},
+ {n:'LLM · briefing e rationale', f:''}
+];
+const MN_ACTIVE = {
+  quiete:[19,15,16,17,4,21,1,13,7],
+  credito:[0,1,2,3,4,21],
+  frode:[5,6,7,8,21],
+  dd:[9,10,11,12,14,4,15,19,13,18,21]
+};
+const MN_COL = {g:'#3fae6a', c:'#4cc3d9', v:'#9b7fd4', '':'#d4a843'};
+
+const mnCanvas = document.getElementById('mnCanvas');
+const mnTip = document.getElementById('mnTip');
+let mnNodes=[], mnActiveSet=new Set(), mnParticles=[], mnHub=null, mnFuse=null, mnSources=[], mnHover=-1;
+
+function mnLayout(){
+  const W = mnCanvas.clientWidth, H = mnCanvas.clientHeight;
+  let seed=7; const rnd=()=>{seed=(seed*1103515245+12345)>>>0;return seed/4294967296};
+  mnNodes = MN_ENGINES.map((e,i)=>{
+    const col = i%6, row = Math.floor(i/6);
+    const x = W*0.16 + col*(W*0.50/5) + (rnd()-.5)*W*0.045;
+    const y = H*0.16 + row*(H*0.72/3) + (rnd()-.5)*H*0.09;
+    const inner=[]; const k=5+Math.floor(rnd()*3);
+    for(let j=0;j<k;j++){const a=rnd()*6.283, r=4+rnd()*8; inner.push([Math.cos(a)*r, Math.sin(a)*r]);}
+    return {x,y,e,inner,phase:rnd()*6.283};
+  });
+  mnFuse = {x:W*0.80, y:H*0.5};
+  mnHub  = {x:W*0.92, y:H*0.5};
+  mnSources = [0.22,0.5,0.78].map(f=>({x:W*0.035, y:H*f}));
+}
+
+function mnSetScenario(id, label, n){
+  mnActiveSet = new Set(MN_ACTIVE[id]||[]);
+  mnParticles = [];
+  const lbl = document.getElementById('mnLabel');
+  if(lbl) lbl.innerHTML = label+' · <b style="color:var(--gold)">'+n+'</b> motori composti';
+}
+
+function mnSpawn(){
+  if(mnActiveSet.size===0) return;
+  const act=[...mnActiveSet];
+  if(mnParticles.length<26 && Math.random()<0.5){
+    const target = mnNodes[act[Math.floor(Math.random()*act.length)]];
+    const src = mnSources[Math.floor(Math.random()*mnSources.length)];
+    mnParticles.push({seg:0, t:0, path:[src, target, mnFuse, mnHub], col:MN_COL[target.e.f]});
+  }
+}
+
+function mnDraw(){
+  const dpr = window.devicePixelRatio||1;
+  const W = mnCanvas.clientWidth, H = mnCanvas.clientHeight;
+  if(mnCanvas.width!==W*dpr){ mnCanvas.width=W*dpr; mnCanvas.height=H*dpr; }
+  const ctx = mnCanvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  const t = performance.now()/1000;
+
+  // links: sorgenti → nodi attivi → fusione → hub (attivi pieni, inattivi accennati)
+  ctx.lineWidth=1;
+  mnNodes.forEach((nd,i)=>{
+    const on = mnActiveSet.has(i);
+    ctx.strokeStyle = on ? 'rgba(212,168,67,.28)' : 'rgba(255,255,255,.04)';
+    const src = mnSources[i%3];
+    ctx.beginPath(); ctx.moveTo(src.x,src.y); ctx.lineTo(nd.x,nd.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(nd.x,nd.y); ctx.lineTo(mnFuse.x,mnFuse.y);
+    ctx.strokeStyle = on ? 'rgba(212,168,67,.34)' : 'rgba(255,255,255,.04)'; ctx.stroke();
+  });
+  ctx.strokeStyle='rgba(212,168,67,.6)'; ctx.lineWidth=1.6;
+  ctx.beginPath(); ctx.moveTo(mnFuse.x,mnFuse.y); ctx.lineTo(mnHub.x,mnHub.y); ctx.stroke();
+
+  // sorgenti dati
+  mnSources.forEach(s=>{
+    ctx.fillStyle='rgba(255,255,255,.35)';
+    ctx.beginPath(); ctx.arc(s.x,s.y,3,0,7); ctx.fill();
+  });
+  ctx.fillStyle='rgba(255,255,255,.45)'; ctx.font='9.5px -apple-system'; ctx.textAlign='left';
+  ctx.fillText('DATI · L1', mnSources[0].x-2, mnSources[0].y-14);
+
+  // nodi: cerchio esterno + micro-rete interna
+  mnNodes.forEach((nd,i)=>{
+    const on = mnActiveSet.has(i);
+    const col = MN_COL[nd.e.f];
+    const R = on ? 17 + Math.sin(t*2+nd.phase)*1.5 : 13;
+    if(on){
+      const g=ctx.createRadialGradient(nd.x,nd.y,2,nd.x,nd.y,R*2.4);
+      g.addColorStop(0,col+'55'); g.addColorStop(1,col+'00');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(nd.x,nd.y,R*2.4,0,7); ctx.fill();
+    }
+    ctx.strokeStyle = on ? col : 'rgba(255,255,255,.16)';
+    ctx.lineWidth = on?1.6:1;
+    ctx.fillStyle = on ? 'rgba(10,13,18,.92)' : 'rgba(255,255,255,.025)';
+    ctx.beginPath(); ctx.arc(nd.x,nd.y,R,0,7); ctx.fill(); ctx.stroke();
+    // micro-rete interna (ogni neurone è una rete)
+    const sc = on?1.15:0.85;
+    ctx.strokeStyle = on ? col+'88' : 'rgba(255,255,255,.10)';
+    ctx.lineWidth=.7;
+    for(let a=0;a<nd.inner.length;a++){
+      const pa=nd.inner[a], pb=nd.inner[(a+1)%nd.inner.length], pc=nd.inner[(a+2)%nd.inner.length];
+      ctx.beginPath(); ctx.moveTo(nd.x+pa[0]*sc, nd.y+pa[1]*sc); ctx.lineTo(nd.x+pb[0]*sc, nd.y+pb[1]*sc); ctx.stroke();
+      if(a%2===0){ctx.beginPath(); ctx.moveTo(nd.x+pa[0]*sc, nd.y+pa[1]*sc); ctx.lineTo(nd.x+pc[0]*sc, nd.y+pc[1]*sc); ctx.stroke();}
+    }
+    ctx.fillStyle = on ? col : 'rgba(255,255,255,.28)';
+    for(const p of nd.inner){ ctx.beginPath(); ctx.arc(nd.x+p[0]*sc, nd.y+p[1]*sc, on?1.6:1.1,0,7); ctx.fill(); }
+    if(i===mnHover){
+      ctx.strokeStyle='#fff'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(nd.x,nd.y,R+4,0,7); ctx.stroke();
+    }
+  });
+
+  // meta-fusione L4
+  ctx.save(); ctx.translate(mnFuse.x,mnFuse.y); ctx.rotate(t*0.5);
+  ctx.strokeStyle='rgba(212,168,67,.9)'; ctx.lineWidth=1.4;
+  ctx.strokeRect(-9,-9,18,18);
+  ctx.rotate(Math.PI/4); ctx.strokeStyle='rgba(212,168,67,.45)';
+  ctx.strokeRect(-9,-9,18,18); ctx.restore();
+  ctx.fillStyle='rgba(255,255,255,.55)'; ctx.font='9.5px -apple-system'; ctx.textAlign='center';
+  ctx.fillText('META-FUSIONE · L4', mnFuse.x, mnFuse.y+30);
+
+  // decision hub L5
+  const hr = 14+Math.sin(t*1.6)*1.2;
+  const hg=ctx.createRadialGradient(mnHub.x,mnHub.y,2,mnHub.x,mnHub.y,hr*2.6);
+  hg.addColorStop(0,'rgba(212,168,67,.5)'); hg.addColorStop(1,'rgba(212,168,67,0)');
+  ctx.fillStyle=hg; ctx.beginPath(); ctx.arc(mnHub.x,mnHub.y,hr*2.6,0,7); ctx.fill();
+  ctx.fillStyle='#d4a843';
+  ctx.beginPath();
+  for(let a=0;a<6;a++){const ang=a*Math.PI/3 - Math.PI/6;
+    a?ctx.lineTo(mnHub.x+Math.cos(ang)*hr, mnHub.y+Math.sin(ang)*hr):ctx.moveTo(mnHub.x+Math.cos(ang)*hr, mnHub.y+Math.sin(ang)*hr);}
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.fillText('DECISION', mnHub.x, mnHub.y+32);
+  ctx.fillText('HUB · L5', mnHub.x, mnHub.y+44);
+
+  // particelle
+  mnSpawn();
+  mnParticles = mnParticles.filter(p=>{
+    p.t += 0.016;
+    if(p.t>=1){ p.seg++; p.t=0; if(p.seg>=p.path.length-1) return false; }
+    const A=p.path[p.seg], B=p.path[p.seg+1];
+    const e=p.t*p.t*(3-2*p.t);
+    const x=A.x+(B.x-A.x)*e, y=A.y+(B.y-A.y)*e;
+    ctx.fillStyle=p.col;
+    ctx.beginPath(); ctx.arc(x,y,2.1,0,7); ctx.fill();
+    ctx.fillStyle=p.col+'44';
+    ctx.beginPath(); ctx.arc(x,y,4.5,0,7); ctx.fill();
+    return true;
+  });
+
+  requestAnimationFrame(mnDraw);
+}
+
+mnCanvas.addEventListener('mousemove', ev=>{
+  const r = mnCanvas.getBoundingClientRect();
+  const x = ev.clientX-r.left, y = ev.clientY-r.top;
+  mnHover = -1;
+  for(let i=0;i<mnNodes.length;i++){
+    const nd=mnNodes[i];
+    if((nd.x-x)**2+(nd.y-y)**2 < 400){ mnHover=i; break; }
+  }
+  if(mnHover>=0){
+    const nd=mnNodes[mnHover];
+    const on = mnActiveSet.has(mnHover);
+    mnTip.style.display='block';
+    mnTip.style.left=(nd.x+24)+'px';
+    mnTip.style.top=(nd.y+30)+'px';
+    mnTip.innerHTML = nd.e.n + '<span>'+(on?'attivo · selezionato dal gating':'in stand-by · sotto soglia E(Mᵢ)')+'</span>';
+  } else mnTip.style.display='none';
+});
+mnCanvas.addEventListener('mouseleave',()=>{mnHover=-1;mnTip.style.display='none'});
+window.addEventListener('resize', mnLayout);
+mnLayout();
+requestAnimationFrame(mnDraw);
+window.__mnReady = true;
+
+/* ================= MODULO FINANZIARIO (Demo B) ================= */
+/* Un output economico per scenario, alla pari degli altri: stessa catena di prova. */
+(function(){
+  const finOuts = {
+    quiete:{t:'Valore a rischio di portafoglio · trimestre', c:90, lead:'aggiornato a ogni ciclo', p:'VaR/CVaR di portafoglio stimato sul trimestre: contenuto, con concentrazione sul book credito. La stima eredita la catena di prova delle baseline di rischio aggiornate.'},
+    credito:{t:'Perdita attesa stimata · tranche di credito', c:84, lead:'a ogni decisione', p:'Perdita attesa sulla tranche: impatto stimato fra −2,4% e −4,1% (confidenza 90%) nello scenario avverso, prima delle mitigazioni. Con riallocazione su classi di rating qualificate, l\'intervallo scende a −0,9% / −1,8%.'},
+    frode:{t:'Perdita evitata · blocco tempestivo', c:88, lead:'consuntivo a 72 h', p:'Il blocco selettivo a 38 secondi dall\'anomalia, confrontato con l\'evoluzione attesa senza intervento, produce una perdita evitata stimata di €18k. Il confronto controfattuale è registrato nella catena di prova.'},
+    dd:{t:'Costo del rischio nel business case', c:86, lead:'dossier 48 h', p:'I rischi tecnici e di compliance quantificati diventano una componente esplicita del business case: costo di mitigazione in fase di integrazione contro spread di rischio residuo, con incertezza propagata sull\'intero orizzonte.'}
+  };
+  for(const s of SCENARIOS){ if(finOuts[s.id]) s.outs.push({...finOuts[s.id], fin:true}); }
+
+  function finSpark(id, base, vr, color, threshold){
+    const cv = document.getElementById(id); if(!cv) return;
+    const dpr = window.devicePixelRatio||1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    cv.width=w*dpr; cv.height=h*dpr;
+    const ctx = cv.getContext('2d'); ctx.scale(dpr,dpr);
+    let seed = base*13+7;
+    const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+    const pts=[]; let v=base;
+    for(let i=0;i<48;i++){ v += (rnd()-0.5)*base*vr*0.5 + Math.sin(i/7)*base*vr*0.15; pts.push(v); }
+    const mn=Math.min(...pts, threshold||Infinity)*0.985, mx=Math.max(...pts)*1.015, rg=(mx-mn)||1;
+    if(threshold){
+      const ty=h-6-((threshold-mn)/rg)*(h-12);
+      ctx.strokeStyle='rgba(212,106,90,.55)'; ctx.setLineDash([4,4]); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(0,ty); ctx.lineTo(w,ty); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle='rgba(212,106,90,.8)'; ctx.font='8.5px -apple-system'; ctx.textAlign='right';
+      ctx.fillText('soglia contrattuale', w-2, ty-4);
+    }
+    ctx.beginPath();
+    pts.forEach((p,i)=>{const x=i/(pts.length-1)*w, y=h-6-((p-mn)/rg)*(h-12); i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+    ctx.strokeStyle=color; ctx.lineWidth=1.6; ctx.stroke();
+    ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();
+    const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,color+'30'); g.addColorStop(1,color+'00');
+    ctx.fillStyle=g; ctx.fill();
+  }
+  const finIO = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      finSpark('finDscr', 1.38, .04, '#3fae6a', 1.20);
+      finSpark('finRev', 612, .07, '#d4a843');
+      finIO.disconnect();
+    }});
+  },{threshold:.3});
+  const finSec = document.getElementById('finanza');
+  if(finSec) finIO.observe(finSec);
+})();
+
+setScenario('frode');
+</script>
+<script>
+/* hero network backdrop — many models; the gating ignites only the optimal subset */
+(function(){const cv=document.getElementById('heroNet');if(!cv)return;const ctx=cv.getContext('2d');const COLS=['#3fae6a','#4cc3d9','#c9a23f','#9b7fd4'];let W,H,DPR,nodes=[],ignited=new Set(),igniteAt=-9999;const PERIOD=2600;function size(){DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}function init(){size();const N=Math.min(94,Math.round(W*H/13000));nodes=[];for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.14,vy:(Math.random()-.5)*.14,c:COLS[i%COLS.length],r:Math.random()*1.5+.6});}function pick(){ignited=new Set();const k=Math.max(4,Math.round(nodes.length*0.12));const idx=[...nodes.keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=idx[i];idx[i]=idx[j];idx[j]=t;}idx.slice(0,k).forEach(i=>ignited.add(i));}function step(){const now=performance.now();if(now-igniteAt>PERIOD){pick();igniteAt=now;}const glow=Math.sin(Math.min(1,(now-igniteAt)/PERIOD)*Math.PI);ctx.clearRect(0,0,W,H);for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);if(d<118){const lit=(ignited.has(i)&&ignited.has(j))?glow:0;ctx.globalAlpha=(1-d/118)*(.13+lit*.5);ctx.strokeStyle=a.c;ctx.lineWidth=.6+lit*.9;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}for(let i=0;i<nodes.length;i++){const n=nodes[i],on=ignited.has(i),g=on?glow:0;ctx.globalAlpha=.5+g*.5;ctx.fillStyle=n.c;ctx.beginPath();ctx.arc(n.x,n.y,n.r*(1+g*1.3),0,7);ctx.fill();ctx.globalAlpha=on?.10+g*.22:.08;ctx.beginPath();ctx.arc(n.x,n.y,n.r*(4.5+g*5),0,7);ctx.fill();}ctx.globalAlpha=1;requestAnimationFrame(step);}init();requestAnimationFrame(step);addEventListener('resize',init);})();
+</script>
+</body>
+</html>
