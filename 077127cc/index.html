@@ -239,6 +239,7 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 /*QLASER*/@property --qa{syntax:"<angle>";inherits:false;initial-value:0deg}#problem .q::before{display:none!important}#problem .qgrid{position:relative}#problem .qgrid::after{content:"";position:absolute;inset:-2px;border-radius:20px;padding:1.5px;background:conic-gradient(from var(--qa),transparent 0deg,transparent 296deg,rgba(63,174,106,.5) 330deg,#eafff2 350deg,rgba(63,174,106,.5) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:qspin 7s linear infinite;pointer-events:none;z-index:2}@keyframes qspin{to{--qa:360deg}}/*NAVFIX*/nav .links a{color:rgba(255,255,255,.86)!important;font-weight:500!important}nav .links a:hover{color:#fff!important}
 /*HERO-LAYOUT*/#brainWrap{transform:translateX(10%)}@media(min-width:1000px){#hero .hero-inner{transform:translateX(-26px)}}
 /*HERO-FADE*/#hero .hero-inner{z-index:2}#hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(6,8,10,.95) 0%,rgba(6,8,10,.9) 20%,rgba(6,8,10,.52) 45%,rgba(6,8,10,0) 66%)}
+/*I18N*/.l-en{display:none}html.en .l-it{display:none}html.en .l-en{display:inline}.langtog{background:transparent;border:1px solid var(--line2);color:rgba(255,255,255,.86);font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 10px;border-radius:999px;cursor:pointer;font-family:inherit;margin-left:6px;transition:.2s}.langtog:hover{border-color:var(--forest);color:var(--forest)}
 </style>
 </head>
 <body>
@@ -247,14 +248,14 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 <nav>
   <a class="brand" href="#hero"><b>AATECH · ENNOUS LAB</b><span>Meta-Intelligence</span></a>
   <div class="links">
-    <a href="#portfolio">Deployments</a>
-    <a href="#reasoning">Reasoning Window</a>
-    <a href="#metalayer">Meta-Layer</a>
-    <a href="#measure">Measure</a>
-    <a href="#disclosure">Compliance</a>
-    <a href="#governance">Governance</a>
+    <a href="#portfolio"><span class="l-it">Asset</span><span class="l-en">Deployments</span></a>
+    <a href="#reasoning"><span class="l-it">Ragionamento</span><span class="l-en">Reasoning Window</span></a>
+    <a href="#metalayer"><span class="l-it">Meta-Layer</span><span class="l-en">Meta-Layer</span></a>
+    <a href="#measure"><span class="l-it">Misura</span><span class="l-en">Measure</span></a>
+    <a href="#disclosure"><span class="l-it">Compliance</span><span class="l-en">Compliance</span></a>
+    <a href="#governance"><span class="l-it">Governance</span><span class="l-en">Governance</span></a>
   </div>
-  <span class="demo-badge">DEMO · CONFIDENTIAL</span>
+  <button class="langtog" id="langTog" aria-label="lingua">EN</button><span class="demo-badge"><span class="l-it">DEMO · RISERVATO</span><span class="l-en">DEMO · CONFIDENTIAL</span></span>
 </nav>
 
 <!-- HERO -->
@@ -263,43 +264,45 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
   <div class="hero-inner">
   <div class="hero-brand rv">AATECH · ENNOUS LAB</div>
   <div class="kicker rv d1">Meta-Intelligence</div>
-  <h1 class="rv d1">Many models,<br>one governing intelligence.</h1>
-  <p class="lead sub rv d2" style="margin-top:22px;max-width:600px">The models multiply across the financial system. Ennous is the layer that decides which one runs, measures it and proves it, under the AI Act, DORA and NIS 2.</p>
-  <a href="#problem" class="scroll-hint rv d3">Explore</a>
+  <h1 class="rv d1"><span class="l-it">Molti modelli,<br>una sola intelligenza che governa.</span><span class="l-en">Many models,<br>one governing intelligence.</span></h1>
+  <p class="lead sub rv d2" style="margin-top:22px;max-width:600px"><span class="l-it">I modelli si moltiplicano nel sistema finanziario. Ennous è lo strato che decide quale far girare, lo misura e lo prova, sotto AI Act, DORA e NIS 2.</span><span class="l-en">The models multiply across the financial system. Ennous is the layer that decides which one runs, measures it and proves it, under the AI Act, DORA and NIS 2.</span></p>
+  <a href="#problem" class="scroll-hint rv d3"><span class="l-it">Esplora</span><span class="l-en">Explore</span></a>
   </div>
 </section>
 
 <!-- THE PROBLEM -->
 <section id="problem">
-  <div class="kicker rv">The problem</div>
-  <h2 class="rv d1">AI is arriving in every portfolio.<br>Few can govern it.</h2>
-  <p class="lead rv d2">Adopting a model is easy; governing it is hard. Before a bank, a regulator or a risk committee trusts a number, a handful of questions decide everything, and most institutions, however expert in their own domain, cannot answer one of them.</p>
+  <div class="kicker rv"><span class="l-it">Il problema</span><span class="l-en">The problem</span></div>
+  <h2 class="rv d1"><span class="l-it">L'AI arriva in ogni portafoglio.<br>Pochi sanno governarla.</span><span class="l-en">AI is arriving in every portfolio.<br>Few can govern it.</span></h2>
+  <p class="lead rv d2"><span class="l-it">Adottare un modello è facile; governarlo è difficile. Prima che una banca, un regolatore o un comitato rischi si fidi di un numero, poche domande decidono tutto, e la maggior parte delle istituzioni, per quanto esperte nel proprio dominio, non sa rispondere a una di esse.</span><span class="l-en">Adopting a model is easy; governing it is hard. Before a bank, a regulator or a risk committee trusts a number, a handful of questions decide everything, and most institutions, however expert in their own domain, cannot answer one of them.</span></p>
     <div class="qgrid rv d2">
-    <div class="q"><div class="qn">Q1</div><p>Which model, and why this one?</p><span>Is it the best model for <em>this</em> decision, or simply the one already installed? Every question deserves the analysis that fits it, not a default.</span></div>
-    <div class="q"><div class="qn">Q2</div><p>When is it even worth it?</p><span>Not every decision needs a heavy model. When does AI add value over its cost and risk, and when is the simplest method the honest one?</span></div>
-    <div class="q"><div class="qn">Q3</div><p>All the signal, or the convenient part?</p><span>Is every useful source captured and brought to one comparable grammar, or only the data that was easy to reach?</span></div>
-    <div class="q"><div class="qn">Q4</div><p>Out of the black box?</p><span>Can the reasoning be opened and read, step by step, or is trusting the output an act of faith?</span></div>
-    <div class="q"><div class="qn">Q5</div><p>Efficiency and error, measured?</p><span>How much compute, and how much uncertainty around the answer, quantified and tracked, not assumed?</span></div>
-    <div class="q"><div class="qn">Q6</div><p>Who governs the models, and what emerges?</p><span>When many models run, what governs them? And what pattern surfaces across them that no single model, and no human query, could reach alone?</span></div>
+    <div class="q"><div class="qn">Q1</div><p><span class="l-it">Quale modello, e perché questo?</span><span class="l-en">Which model, and why this one?</span></p><span><span class="l-it">È il modello migliore per <em>questa</em> decisione, o solo quello già installato? Ogni domanda merita l'analisi che le si addice, non un default.</span><span class="l-en">Is it the best model for <em>this</em> decision, or simply the one already installed? Every question deserves the analysis that fits it, not a default.</span></span></div>
+    <div class="q"><div class="qn">Q2</div><p><span class="l-it">Quando conviene davvero?</span><span class="l-en">When is it even worth it?</span></p><span><span class="l-it">Non ogni decisione richiede un modello pesante. Quando l'AI aggiunge valore oltre il suo costo e rischio, e quando il metodo più semplice è quello onesto?</span><span class="l-en">Not every decision needs a heavy model. When does AI add value over its cost and risk, and when is the simplest method the honest one?</span></span></div>
+    <div class="q"><div class="qn">Q3</div><p><span class="l-it">Tutto il segnale, o la parte comoda?</span><span class="l-en">All the signal, or the convenient part?</span></p><span><span class="l-it">Ogni fonte utile è catturata e portata a una grammatica comune, o solo il dato facile da raggiungere?</span><span class="l-en">Is every useful source captured and brought to one comparable grammar, or only the data that was easy to reach?</span></span></div>
+    <div class="q"><div class="qn">Q4</div><p><span class="l-it">Fuori dalla scatola nera?</span><span class="l-en">Out of the black box?</span></p><span><span class="l-it">Il ragionamento si può aprire e leggere, passo per passo, o fidarsi dell'output è un atto di fede?</span><span class="l-en">Can the reasoning be opened and read, step by step, or is trusting the output an act of faith?</span></span></div>
+    <div class="q"><div class="qn">Q5</div><p><span class="l-it">Efficienza ed errore, misurati?</span><span class="l-en">Efficiency and error, measured?</span></p><span><span class="l-it">Quanto calcolo, e quanta incertezza sulla risposta, quantificati e tracciati, non assunti?</span><span class="l-en">How much compute, and how much uncertainty around the answer, quantified and tracked, not assumed?</span></span></div>
+    <div class="q"><div class="qn">Q6</div><p><span class="l-it">Chi governa i modelli, e cosa emerge?</span><span class="l-en">Who governs the models, and what emerges?</span></p><span><span class="l-it">Quando girano molti modelli, cosa li governa? E quale pattern emerge tra di essi che nessun singolo modello, e nessuna query umana, potrebbe raggiungere da solo?</span><span class="l-en">When many models run, what governs them? And what pattern surfaces across them that no single model, and no human query, could reach alone?</span></span></div>
   </div>
-  <p class="turn rv d3">Ennous is the brain that governs the brains, it chooses among models, gathers the signal, opens the reasoning, quantifies efficiency and error, and leaves a proof. <b>By construction.</b> Then it applies it where the stakes are highest: regulated finance, under the AI Act and DORA.</p>
+  <p class="turn rv d3"><span class="l-it">Ennous è il cervello che governa i cervelli: sceglie tra i modelli, raccoglie il segnale, apre il ragionamento, quantifica efficienza ed errore, e lascia una prova. <b>Per costruzione.</b> Poi lo applica dove la posta è più alta: la finanza regolata, sotto AI Act e DORA.</span><span class="l-en">Ennous is the brain that governs the brains, it chooses among models, gathers the signal, opens the reasoning, quantifies efficiency and error, and leaves a proof. <b>By construction.</b> Then it applies it where the stakes are highest: regulated finance, under the AI Act and DORA.</span></p>
 </section>
 
 <!-- OVERVIEW -->
 <section id="overview">
-  <div class="kicker rv">The stack in one view</div>
+  <div class="kicker rv"><span class="l-it">Lo stack in una vista</span><span class="l-en">The stack in one view</span></div>
   <p class="lead rv d2">
-    Ennous supports the technology partner for finance where it counts most: <strong>governance</strong>.
+    <span class="l-it">Ennous supporta il partner tecnologico della finanza dove conta di più: la <strong>governance</strong>.
+    Man mano che l'ecosistema di modelli cresce, in pochi sanno governare l'intelligenza al suo interno. Ennous aggiunge esattamente questo: decide <strong class="gr">quale modello far girare, e lo prova</strong>,
+    pesa accuratezza, costo, energia e spiegabilità, e lascia un audit al <strong>passo di selezione</strong>. Non un altro strumento nello stack: lo strato che governa l'ecosistema.</span><span class="l-en">Ennous supports the technology partner for finance where it counts most: <strong>governance</strong>.
     As the ecosystem of models grows, few can govern the intelligence within it. Ennous adds exactly that: it decides <strong class="gr">which model runs, and proves it</strong>,
-    weighs accuracy, cost, energy and explainability, and leaves an audit at the <strong>step of selection</strong>. Not another tool in the stack: the governing layer over the ecosystem.
+    weighs accuracy, cost, energy and explainability, and leaves an audit at the <strong>step of selection</strong>. Not another tool in the stack: the governing layer over the ecosystem.</span>
   </p>
   <div class="hero-stats rv d3">
-    <div class="hstat"><div class="n gr">6</div><div class="l">institutions served · Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba <span class="bdg real">public</span></div></div>
-    <div class="hstat"><div class="n">+329%</div><div class="l">production value growth in 2025 · sovereign AI Infrastructure line</div></div>
-    <div class="hstat"><div class="n cy">4</div><div class="l">business lines · Credit Solutions · Public guarantees · Platform (TaaS) · AI Infrastructure</div></div>
-    <div class="hstat"><div class="n go">~100</div><div class="l">intelligence engines <b>potentially activatable</b> · ~1 in 10 ignited per decision · figure estimated from an average of high-complexity projects</div></div>
-    <div class="hstat"><div class="n">&minus;85%</div><div class="l">GPU hours per decision · budget-constrained gating · accuracy within ~1pp</div></div>
-    <div class="hstat"><div class="n gr">SHA-256</div><div class="l">audit at the step of model selection · <b>AI Act &amp; DORA</b> ready · CNR-IAC validated</div></div>
+    <div class="hstat"><div class="n gr">6</div><div class="l"><span class="l-it">istituzioni servite · Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba </span><span class="l-en">institutions served · Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba </span><span class="bdg real">public</span></div></div>
+    <div class="hstat"><div class="n">+329%</div><div class="l"><span class="l-it">crescita del valore della produzione nel 2025 · linea AI Infrastructure sovrana</span><span class="l-en">production value growth in 2025 · sovereign AI Infrastructure line</span></div></div>
+    <div class="hstat"><div class="n cy">4</div><div class="l"><span class="l-it">linee di business · Credit Solutions · Garanzie pubbliche · Platform (TaaS) · AI Infrastructure</span><span class="l-en">business lines · Credit Solutions · Public guarantees · Platform (TaaS) · AI Infrastructure</span></div></div>
+    <div class="hstat"><div class="n go">~100</div><div class="l"><span class="l-it">motori d'intelligenza <b>potenzialmente attivabili</b> · ~1 su 10 acceso per decisione · stima da una media di progetti ad alta complessità</span><span class="l-en">intelligence engines <b>potentially activatable</b> · ~1 in 10 ignited per decision · figure estimated from an average of high-complexity projects</span></div></div>
+    <div class="hstat"><div class="n">&minus;85%</div><div class="l"><span class="l-it">ore GPU per decisione · gating a budget · accuratezza entro ~1pp</span><span class="l-en">GPU hours per decision · budget-constrained gating · accuracy within ~1pp</span></div></div>
+    <div class="hstat"><div class="n gr">SHA-256</div><div class="l"><span class="l-it">audit al passo di selezione del modello · </span><span class="l-en">audit at the step of model selection · </span><b>AI Act &amp; DORA</b> ready · CNR-IAC validated</div></div>
   </div>
   <div class="disc rv d3">
     <b>Nature of the data.</b> Method: <b>simulate from origin</b>. AATECH positions (Società Benefit; public clients Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba; +329% in 2025; sovereign AI Infrastructure line)
@@ -316,20 +319,22 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 
 <!-- PORTFOLIO MAP -->
 <section id="portfolio">
-  <div class="kicker rv">01 · The deployments, alive</div>
-  <h2 class="rv d1">Systems apart. Decisions comparable.</h2>
+  <div class="kicker rv"><span class="l-it">01 · I deployment, vivi</span><span class="l-en">01 · The deployments, alive</span></div>
+  <h2 class="rv d1"><span class="l-it">Sistemi distinti. Decisioni confrontabili.</span><span class="l-en">Systems apart. Decisions comparable.</span></h2>
   <p class="lead rv d2">
-    Six institutions, five lines of business, dozens of models. Today each deployment lives in its own
+    <span class="l-it">Sei istituzioni, cinque linee di business, decine di modelli. Oggi ogni deployment vive nel proprio
+    silo, credit scoring, KPI ESG, frodi, telemetria infrastrutturale. Qui convergono in un'unica vista governata, con
+    una grammatica comune: decisione, modello, provenienza, confidenza, costo. Seleziona un deployment.</span><span class="l-en">Six institutions, five lines of business, dozens of models. Today each deployment lives in its own
     silo, credit scoring, ESG KPIs, fraud, infrastructure telemetry. Here they converge in a single governed view, with
-    a common grammar: decision, model, provenance, confidence, cost. Select a deployment.
+    a common grammar: decision, model, provenance, confidence, cost. Select a deployment.</span>
   </p>
   <div class="map-wrap rv d2">
     <div class="map-panel"><canvas id="usMap"></canvas>
       <div class="legend">
-        <span class="lg"><i style="background:var(--forest)"></i>Credit &amp; guarantees</span>
-        <span class="lg"><i style="background:var(--cyan)"></i>AI Infrastructure</span>
-        <span class="lg"><i style="background:var(--violet)"></i>ESG / Green finance</span>
-        <span class="lg"><i style="background:var(--gold)"></i>AI Venture</span>
+        <span class="lg"><i style="background:var(--forest)"></i><span class="l-it">Credito e garanzie</span><span class="l-en">Credit &amp; guarantees</span></span>
+        <span class="lg"><i style="background:var(--cyan)"></i><span class="l-it">AI Infrastructure</span><span class="l-en">AI Infrastructure</span></span>
+        <span class="lg"><i style="background:var(--violet)"></i><span class="l-it">ESG / Green finance</span><span class="l-en">ESG / Green finance</span></span>
+        <span class="lg"><i style="background:var(--gold)"></i><span class="l-it">AI Venture</span><span class="l-en">AI Venture</span></span>
       </div>
     </div>
     <div class="tract-detail"><div class="tchips" id="tChips"></div><div class="tract-card" id="tractCard"></div></div>
@@ -341,13 +346,16 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 
 <!-- REASONING WINDOW -->
 <section id="reasoning">
-  <div class="kicker rv">02 · The Reasoning Window</div>
-  <h2 class="rv d1">You don't ask «what if».<br>You change the objective, and the intelligence recomposes itself.</h2>
+  <div class="kicker rv"><span class="l-it">02 · La Finestra di Ragionamento</span><span class="l-en">02 · The Reasoning Window</span></div>
+  <h2 class="rv d1"><span class="l-it">Non chiedi «e se».<br>Cambi l'obiettivo, e l'intelligenza si ricompone.</span><span class="l-en">You don't ask «what if».<br>You change the objective, and the intelligence recomposes itself.</span></h2>
   <p class="lead rv d2">
-    A sensitivity slider recomputes one fixed formula. This does not. Change the <strong>objective</strong> and a patent-pending
+    <span class="l-it">Uno slider di sensitività ricalcola una formula fissa. Questo no. Cambia l'<strong>obiettivo</strong> e uno strato
+    con brevetto in corso <strong>compone la propria pipeline d'analisi</strong> (L4-bis), <strong class="gr">accende solo il sottoinsieme
+    ottimale</strong> di ~100 motori e mette a riposo gli altri, così <strong>l'intelligenza gira a una frazione del costo</strong> mentre
+    <strong>la confidenza resta misurata</strong>. Scegli un obiettivo.</span><span class="l-en">A sensitivity slider recomputes one fixed formula. This does not. Change the <strong>objective</strong> and a patent-pending
     layer <strong>composes its own analysis pipeline</strong> (L4-bis), <strong class="gr">ignites only the optimal
     subset</strong> of ~100 engines and idles the rest, so <strong>intelligence runs at a fraction of the cost</strong> while
-    <strong>confidence stays measured</strong>. Pick an objective.
+    <strong>confidence stays measured</strong>. Pick an objective.</span>
   </p>
   <div class="obj-tabs rv d2" id="objTabs"></div>
   <div class="rw-stage rv d3">
@@ -373,10 +381,10 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 <!-- META-NET -->
 <section id="metanet">
   <div class="kicker rv">02b · The meta-net</div>
-  <h2 class="rv d1">Every node is a network.</h2>
+  <h2 class="rv d1"><span class="l-it">Ogni nodo è una rete.</span><span class="l-en">Every node is a network.</span></h2>
   <div class="metanet rv d2">
     <div class="mh"><span class="t">Meta-net · every node is a network</span><span class="c" id="mnLabel"></span></div>
-    <div class="mn-hint">Change the objective, the network recomposes, and the number of engines with it:</div>
+    <div class="mn-hint"><span class="l-it">Cambia l'obiettivo: la rete si ricompone, e con essa il numero di motori:</span><span class="l-en">Change the objective, the network recomposes, and the number of engines with it:</span></div>
     <div class="mn-obj" id="mnObj"></div>
     <canvas id="mnCanvas"></canvas>
     <div class="mn-tip" id="mnTip"></div>
@@ -398,15 +406,15 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 <!-- DECISION SIMULATOR -->
 <section id="simulator">
   <div class="kicker rv">02c · Decision Simulator</div>
-  <h2 class="rv d1">One engine. Many decisions.</h2>
-  <p class="lead rv d2">The context changes, the engine recomposes, and the decision changes with it. The confidence stays measured. Pick a scenario.</p>
+  <h2 class="rv d1"><span class="l-it">Un solo motore. Molte decisioni.</span><span class="l-en">One engine. Many decisions.</span></h2>
+  <p class="lead rv d2"><span class="l-it">Il contesto cambia, il motore si ricompone, e con esso la decisione. La confidenza resta misurata. Scegli uno scenario.</span><span class="l-en">The context changes, the engine recomposes, and the decision changes with it. The confidence stays measured. Pick a scenario.</span></p>
   <div class="sim-scen rv d2" id="simScen"></div>
   <div class="sim-out rv d3" id="simOut"></div>
 </section>
 
 <section id="metalayer">
-  <div class="kicker rv">03 · The Meta-Layer speaks</div>
-  <h2 class="rv d1">Conclusions no single model, and no human query, could reach.</h2>
+  <div class="kicker rv"><span class="l-it">03 · Il Meta-Layer parla</span><span class="l-en">03 · The Meta-Layer speaks</span></div>
+  <h2 class="rv d1"><span class="l-it">Conclusioni che nessun singolo modello, e nessuna query umana, potrebbero raggiungere.</span><span class="l-en">Conclusions no single model, and no human query, could reach.</span></h2>
   <p class="lead rv d2">
     These do not come out of a model. They come from watching <strong>which models win, and how that changes over
     time</strong>, meta-knowledge over the portfolio. Each carries the engine subset that produced it, a calibrated
@@ -421,25 +429,26 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 
 <!-- ESTIMATE TO MEASURE -->
 <section id="measure">
-  <div class="kicker rv">04 · From estimate to measure</div>
-  <h2 class="rv d1">The number a regulator can defend.</h2>
+  <div class="kicker rv"><span class="l-it">04 · Dalla stima alla misura</span><span class="l-en">04 · From estimate to measure</span></div>
+  <h2 class="rv d1"><span class="l-it">Il numero che un regolatore può difendere.</span><span class="l-en">The number a regulator can defend.</span></h2>
   <p class="lead rv d2">
-    Across regulated finance, value turns on model-level decisions, which model for this exposure, at what confidence, at what compute cost. The platform renders each as a
-    <strong class="gr">measure</strong>, multi-source fusion, explicit uncertainty, audit trail, not a black-box score. The same layer makes an ESG KPI equally defensible: <strong>evidence, not declaration</strong>.
+    <span class="l-it">Nella finanza regolata, il valore dipende da decisioni a livello di modello: quale modello per questa esposizione, con quale confidenza, a quale costo di calcolo. La piattaforma rende ciascuna una
+    <strong class="gr">misura</strong>: fusione multi-sorgente, incertezza esplicita, catena d'audit, non un punteggio a scatola nera. Lo stesso strato rende un KPI ESG ugualmente difendibile: <strong>evidenza, non dichiarazione</strong>.</span><span class="l-en">Across regulated finance, value turns on model-level decisions, which model for this exposure, at what confidence, at what compute cost. The platform renders each as a
+    <strong class="gr">measure</strong>, multi-source fusion, explicit uncertainty, audit trail, not a black-box score. The same layer makes an ESG KPI equally defensible: <strong>evidence, not declaration</strong>.</span>
   </p>
   <div class="em-grid rv d2">
     <div class="em">
-      <h4>Credit decision · model, confidence, cost</h4>
-      <div class="before">black-box score <span style="font-size:13px">· estimate</span></div>
-      <div class="arrow">↓ in a pilot, measured by the engine</div>
-      <div class="after">per exposure <small>· calibrated confidence · provenance · drift-watched</small></div>
+      <h4><span class="l-it">Decisione di credito · modello, confidenza, costo</span><span class="l-en">Credit decision · model, confidence, cost</span></h4>
+      <div class="before"><span class="l-it">punteggio black-box <span style="font-size:13px">· stima</span></span><span class="l-en">black-box score <span style="font-size:13px">· estimate</span></span></div>
+      <div class="arrow"><span class="l-it">↓ in un pilota, misurato dal motore</span><span class="l-en">↓ in a pilot, measured by the engine</span></div>
+      <div class="after"><span class="l-it">per esposizione <small>· confidenza calibrata · provenienza · sorvegliato per drift</small></span><span class="l-en">per exposure <small>· calibrated confidence · provenance · drift-watched</small></span></div>
       <p>Which model for this exposure, at what confidence and compute cost, the decisions behind a credit or a guarantee, each rendered defensible under the AI Act rather than opaque. <span class="bdg val">to validate on AATECH data</span></p>
     </div>
     <div class="em">
-      <h4>ESG KPI · declaration → evidence</h4>
-      <div class="before">self-declared <span style="font-size:13px">· estimate</span></div>
-      <div class="arrow">↓ engine layer</div>
-      <div class="after">computed <small>· band · provenance · illustrative</small></div>
+      <h4><span class="l-it">KPI ESG · dichiarazione → evidenza</span><span class="l-en">ESG KPI · declaration → evidence</span></h4>
+      <div class="before"><span class="l-it">auto-dichiarato <span style="font-size:13px">· stima</span></span><span class="l-en">self-declared <span style="font-size:13px">· estimate</span></span></div>
+      <div class="arrow"><span class="l-it">↓ strato dei motori</span><span class="l-en">↓ engine layer</span></div>
+      <div class="after"><span class="l-it">calcolato <small>· banda · provenienza · illustrativo</small></span><span class="l-en">computed <small>· band · provenance · illustrative</small></span></div>
       <p>An SLL or green-lending KPI is a declaration today; the same engine makes it a computable measure with provenance, what supervisors and the EU Taxonomy require. Verified, not asserted. <span class="bdg sim">simulated from origin</span></p>
     </div>
   </div>
@@ -448,15 +457,17 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 <!-- DISCLOSURE -->
 <section id="disclosure">
   <div class="kicker rv">05 · The compliance pack, generated</div>
-  <h2 class="rv d1">An evidence pack, not a policy PDF.</h2>
+  <h2 class="rv d1"><span class="l-it">Un pacchetto di prove, non un PDF di policy.</span><span class="l-en">An evidence pack, not a policy PDF.</span></h2>
   <p class="lead rv d2">
-    AATECH operates for its financial clients under the <strong>AI Act</strong> (high-risk AI) and <strong>DORA</strong> (ICT operational resilience). The same proof chain
+    <span class="l-it">AATECH opera per i suoi clienti finanziari sotto l'<strong>AI Act</strong> (AI ad alto rischio) e <strong>DORA</strong> (resilienza operativa ICT). La stessa catena di prova
+    che sostiene ogni decisione <strong class="gr">compila da sé il pacchetto di compliance</strong>: la struttura di documentazione tecnica dell'AI Act e gli
+    indicatori di rischio ICT DORA, con l'hash finale come firma di deposito. Poiché l'audit è preso al <strong>passo di selezione del modello</strong>, ogni decisione è ripercorribile per costruzione. Il metodo alla base è validato con il <strong>CNR-IAC</strong>, un organo del Consiglio Nazionale delle Ricerche (CNR), rilevante per audit indipendente e revisione di vigilanza.</span><span class="l-en">AATECH operates for its financial clients under the <strong>AI Act</strong> (high-risk AI) and <strong>DORA</strong> (ICT operational resilience). The same proof chain
     that backs each decision <strong class="gr">compiles the compliance pack itself</strong>, the AI Act technical-documentation structure and the
-    DORA ICT-risk indicators, with the final hash as a filing signature. Because the audit is taken at the <strong>step of model selection</strong>, every decision is retraceable by design. The underlying method is validated with <strong>CNR-IAC</strong>, a body of Italy's national research council (CNR), relevant for independent audit and supervisory review.
+    DORA ICT-risk indicators, with the final hash as a filing signature. Because the audit is taken at the <strong>step of model selection</strong>, every decision is retraceable by design. The underlying method is validated with <strong>CNR-IAC</strong>, a body of Italy's national research council (CNR), relevant for independent audit and supervisory review.</span>
   </p>
   <div class="gen-wrap rv d2">
     <div class="gen-top">
-      <h3>AI Act technical file + DORA ICT-risk · auto-compiled from the proof chain</h3>
+      <h3><span class="l-it">File tecnico AI Act + rischio ICT DORA · auto-compilato dalla catena di prova</span><span class="l-en">AI Act technical file + DORA ICT-risk · auto-compiled from the proof chain</span></h3>
       <button class="gen-btn" id="genBtn" onclick="generateDisclosure()">▶ Generate disclosure</button>
     </div>
     <div class="leap" id="leap"></div>
@@ -469,11 +480,12 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 
 <!-- GOVERNANCE + PATH -->
 <section id="governance">
-  <div class="kicker rv">06 · The boundaries</div>
-  <h2 class="rv d1">The platform governs the models.<br>The decisions stay with AATECH.</h2>
+  <div class="kicker rv"><span class="l-it">06 · I confini</span><span class="l-en">06 · The boundaries</span></div>
+  <h2 class="rv d1"><span class="l-it">La piattaforma governa i modelli.<br>Le decisioni restano ad AATECH.</span><span class="l-en">The platform governs the models.<br>The decisions stay with AATECH.</span></h2>
   <p class="lead rv d2">
-    It selects, measures, flags and documents. It does not set risk appetite, price credit or replace the
-    risk committee. It does not replace AATECH's process or its clients', it renders it <strong>usable, recurring and verifiable</strong>.
+    <span class="l-it">Seleziona, misura, segnala e documenta. Non fissa la propensione al rischio, non prezza il credito, non sostituisce il
+    comitato rischi. Non sostituisce il processo di AATECH né dei suoi clienti: lo rende <strong>usabile, ricorrente e verificabile</strong>.</span><span class="l-en">It selects, measures, flags and documents. It does not set risk appetite, price credit or replace the
+    risk committee. It does not replace AATECH's process or its clients', it renders it <strong>usable, recurring and verifiable</strong>.</span>
   </p>
   <div class="gov rv d2">
     <div class="gcol"><h3>The platform does</h3><div class="sub">model governance layer</div>
@@ -498,31 +510,36 @@ footer .sig{font-size:11px;color:var(--txt2);text-align:right;line-height:1.7}
 
 <!-- ROADMAP + COOPERATION -->
 <section id="roadmap">
-  <div class="kicker rv">07 · The path</div>
-  <h2 class="rv d1">AATECH Lab:<br>the venture we would propose.</h2>
-  <p class="lead rv d2">We would propose a joint NewCo, AATECH Lab, and the reasoning is strategic: it aligns incentives, pools AATECH's industrial base with Plantiverse's patented layer and research, and, as a Lazio-based venture of research and industry, fits the profile that draws regional innovation co-funding and independent co-investors. Should a scoped mandate be the right first step, it earns its way toward the venture. Either way, it begins on a representative slice and scales from there.</p>
+  <div class="kicker rv"><span class="l-it">07 · Il percorso</span><span class="l-en">07 · The path</span></div>
+  <h2 class="rv d1"><span class="l-it">AATECH Lab:<br>la venture che proporremmo.</span><span class="l-en">AATECH Lab:<br>the venture we would propose.</span></h2>
+  <p class="lead rv d2"><span class="l-it">Proporremmo una NewCo congiunta, AATECH Lab, e il ragionamento è strategico: allinea gli incentivi, unisce la base industriale di AATECH allo strato brevettato e alla ricerca di Plantiverse e, come venture di ricerca e industria con base in Lazio, rientra nel profilo che attrae co-finanziamenti regionali all'innovazione e co-investitori indipendenti. Se un mandato mirato fosse il primo passo giusto, si guadagna la strada verso la venture. In ogni caso, parte da una porzione rappresentativa e cresce da lì.</span><span class="l-en">We would propose a joint NewCo, AATECH Lab, and the reasoning is strategic: it aligns incentives, pools AATECH's industrial base with Plantiverse's patented layer and research, and, as a Lazio-based venture of research and industry, fits the profile that draws regional innovation co-funding and independent co-investors. Should a scoped mandate be the right first step, it earns its way toward the venture. Either way, it begins on a representative slice and scales from there.</span></p>
   <div class="roadmap-track rv d3">
-    <div class="rphase"><div class="rp-n">1</div><div class="rp-t">Scope · mandate or venture</div><div class="rp-d">A first mandate on real cases, or the NewCo directly. AATECH's compute and channel; Plantiverse's patented layer and research.</div><div class="rp-when">start</div></div>
-    <div class="rphase"><div class="rp-n">2</div><div class="rp-t">Prove · three workstreams</div><div class="rp-d">AI Infra, Credit/ESG and a Blueprint, on AATECH's real cases. Evidence gate at 180 days.</div><div class="rp-when">~180 days</div></div>
-    <div class="rphase"><div class="rp-n">3</div><div class="rp-t">Extend · lines &amp; clients</div><div class="rp-d">Across the four lines and the client base, on AATECH's own data.</div><div class="rp-when">scale</div></div>
-    <div class="rphase"><div class="rp-n">4</div><div class="rp-t">Toward the main market</div><div class="rp-d">A governed, auditable AI story that strengthens the move to the main market.</div><div class="rp-when">horizon</div></div>
+    <div class="rphase"><div class="rp-n">1</div><div class="rp-t"><span class="l-it">Scoping · mandato o venture</span><span class="l-en">Scope · mandate or venture</span></div><div class="rp-d"><span class="l-it">Un primo mandato su casi reali, o la NewCo diretta. Calcolo e canale di AATECH; strato brevettato e ricerca di Plantiverse.</span><span class="l-en">A first mandate on real cases, or the NewCo directly. AATECH's compute and channel; Plantiverse's patented layer and research.</span></div><div class="rp-when"><span class="l-it">avvio</span><span class="l-en">start</span></div></div>
+    <div class="rphase"><div class="rp-n">2</div><div class="rp-t"><span class="l-it">Prova · tre workstream</span><span class="l-en">Prove · three workstreams</span></div><div class="rp-d"><span class="l-it">AI Infra, Credit/ESG e un Blueprint, sui casi reali di AATECH. Gate di evidenza a 180 giorni.</span><span class="l-en">AI Infra, Credit/ESG and a Blueprint, on AATECH's real cases. Evidence gate at 180 days.</span></div><div class="rp-when"><span class="l-it">~180 giorni</span><span class="l-en">~180 days</span></div></div>
+    <div class="rphase"><div class="rp-n">3</div><div class="rp-t"><span class="l-it">Estensione · linee e clienti</span><span class="l-en">Extend · lines &amp; clients</span></div><div class="rp-d"><span class="l-it">Su tutte e quattro le linee e la base clienti, sui dati di AATECH.</span><span class="l-en">Across the four lines and the client base, on AATECH's own data.</span></div><div class="rp-when"><span class="l-it">scala</span><span class="l-en">scale</span></div></div>
+    <div class="rphase"><div class="rp-n">4</div><div class="rp-t"><span class="l-it">Verso il mercato principale</span><span class="l-en">Toward the main market</span></div><div class="rp-d"><span class="l-it">Una storia di AI governata e auditabile che rafforza il passaggio al mercato principale.</span><span class="l-en">A governed, auditable AI story that strengthens the move to the main market.</span></div><div class="rp-when"><span class="l-it">orizzonte</span><span class="l-en">horizon</span></div></div>
   </div>
   <div class="endcap rv d3">
     <h3>AATECH Lab</h3>
-    <p>We would propose a joint NewCo. AATECH brings the compute, the channel to the banks and the compliance rails; Plantiverse brings the <strong>patented governing layer</strong> and the research behind it. AATECH hosts the AI of the financial system; Ennous makes it measurable, governed and provable. <strong>A venture, or a mandate that earns its way to one.</strong></p>
+    <p><span class="l-it">Proporremmo una NewCo congiunta. AATECH porta il calcolo, il canale verso le banche e i binari di compliance; Plantiverse porta lo <strong>strato brevettato che governa</strong> e la ricerca che gli sta dietro. AATECH ospita l'AI del sistema finanziario; Ennous la rende misurabile, governata e provabile. <strong>Una venture, o un mandato che se la guadagna.</strong></span><span class="l-en">We would propose a joint NewCo. AATECH brings the compute, the channel to the banks and the compliance rails; Plantiverse brings the <strong>patented governing layer</strong> and the research behind it. AATECH hosts the AI of the financial system; Ennous makes it measurable, governed and provable. <strong>A venture, or a mandate that earns its way to one.</strong></span></p>
     <p>A Lazio-based venture of research and industry sits squarely in the profile that attracts <strong>regional innovation co-funding</strong> and independent co-investors. It starts on a representative slice of the estate, a hologram of the stack governed in miniature, with an <strong>evidence gate at every step</strong>. <strong class="gr">The measure of success is simple: whether every decision AATECH hosts becomes governed, measured and provable.</strong></p>
-    <div class="cta-row"><a class="cta" href="mailto:info@ecobubble.it?subject=AATECH%20Lab%20%E2%80%94%20NewCo">Scope the NewCo, together &rarr;</a><a class="cta cta-ghost" href="https://calendly.com/nicola-nescatelli/30min">Book a call</a><span class="cta-note">AATECH's industrial base, Plantiverse's patented layer. A joint venture, scoped on evidence.</span></div>
+    <div class="cta-row"><a class="cta" href="mailto:info@ecobubble.it?subject=AATECH%20Lab"><span class="l-it">Definiamo la NewCo, insieme &rarr;</span><span class="l-en">Scope the NewCo, together &rarr;</span></a><a class="cta cta-ghost" href="https://calendly.com/nicola-nescatelli/30min"><span class="l-it">Prenota una call</span><span class="l-en">Book a call</span></a><span class="cta-note"><span class="l-it">La base industriale di AATECH, lo strato brevettato di Plantiverse. Una venture congiunta, definita sull'evidenza.</span><span class="l-en">AATECH's industrial base, Plantiverse's patented layer. A joint venture, scoped on evidence.</span></span></div>
   </div>
 </section>
 
 <footer>
   <div class="fin">
-    <p><b>AATECH · Ennous.</b> Demonstration prepared for the AATECH group. Positions
+    <p><span class="l-it"><b>AATECH · Ennous.</b> Dimostrazione preparata per il gruppo AATECH. Le posizioni
+    (Società Benefit; clienti pubblici Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba; +329% del valore della produzione nel 2025;
+    linea AI Infrastructure sovrana) derivano da fonti pubbliche. Telemetria dei deployment, punteggi di gating, insight del meta-layer e
+    pacchetti di compliance sono <b>simulati dall'origine</b> e riproducono il comportamento progettato del sistema, secondo l'architettura
+    depositata (brevetto 11.E2118.12.IT.7, pending, + 5 estensioni tecniche, candidate). Nulla qui è una misura certificata,
+    consulenza finanziaria o un'offerta. La piattaforma seleziona, misura e documenta; le decisioni restano ad AATECH e ai suoi clienti.</span><span class="l-en"><b>AATECH · Ennous.</b> Demonstration prepared for the AATECH group. Positions
     (Società Benefit; public clients Allianz, Fineco, Azimut, Amundi, BCC, Banca d'Alba; +329% production value in 2025;
     sovereign AI Infrastructure line) are drawn from public sources. Deployment telemetry, gating scores, meta-layer insights and
     compliance packs are <b>simulated from origin</b> and reproduce the designed behaviour of the system, per the deposited
     architecture (patent 11.E2118.12.IT.7, pending, + 5 technical extensions, candidate). Nothing herein is a certified
-    measure, financial advice or an offer. The platform selects, measures and documents; decisions remain with AATECH and its clients.</p>
+    measure, financial advice or an offer. The platform selects, measures and documents; decisions remain with AATECH and its clients.</span></p>
     <div class="sig">ENNOUS · Meta-Intelligence Lab<br>Plant &amp; Geo-Driven Systems<br><span style="color:var(--txt3)">v1.0 · 2026</span></div>
   </div>
 </footer>
@@ -969,6 +986,14 @@ function simSel(i){const sc=SCEN[i];document.querySelectorAll('.sim-chip').forEa
  '<div class="som"><div class="sv">'+sc.metric+'</div><div class="sk">effect</div></div>'+
  '<div class="som"><div class="sv cy">recomposed</div><div class="sk">pipeline</div></div></div>'+
  '<div class="so-driver">Ignited by: <b>'+sc.driver+'</b>. One engine, a different forest, governed the same way. <span class="bdg sim">simulated from origin</span></div>';}
+</script>
+<script>
+function setLang(l){document.documentElement.classList.toggle('en',l==='en');try{localStorage.ennousLang=l;}catch(e){}
+ var b=document.getElementById('langTog');if(b)b.textContent=l==='en'?'IT':'EN';
+ if(window.renderI18n){try{renderI18n();}catch(e){}}}
+(function(){var b=document.getElementById('langTog');if(b)b.onclick=function(){setLang(document.documentElement.classList.contains('en')?'it':'en');};
+ var saved='it';try{saved=localStorage.ennousLang||'it';}catch(e){}setLang(saved);})();
+window.LANG=function(){return document.documentElement.classList.contains('en')?'en':'it';};
 </script>
 </body>
 </html>
